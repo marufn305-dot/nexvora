@@ -1,0 +1,2957 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#008000">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NEXVORA - Online Marketplace</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f5f7f6;
+    color:#222;
+}
+
+button{
+    cursor:pointer;
+}
+
+/* HEADER */
+
+header{
+    background:#008f4c;
+    color:white;
+    padding:14px;
+}
+
+.top{
+    max-width:1200px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.logo{
+    font-size:27px;
+    font-weight:bold;
+}
+
+.search{
+    display:flex;
+    flex:1;
+    max-width:550px;
+}
+
+.search input{
+    width:100%;
+    padding:12px;
+    border:0;
+    outline:0;
+    border-radius:6px 0 0 6px;
+    font-size:15px;
+}
+
+.search button{
+    border:0;
+    padding:12px 17px;
+    background:#006b38;
+    color:white;
+    border-radius:0 6px 6px 0;
+}
+
+.account{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.account a,
+.account button{
+    color:white;
+    background:none;
+    border:0;
+    text-decoration:none;
+}
+
+#cartCount{
+    background:#ff9800;
+    padding:2px 7px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+nav{
+    max-width:1200px;
+    margin:14px auto 0;
+    display:flex;
+    gap:22px;
+    overflow-x:auto;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    white-space:nowrap;
+}
+
+
+/* MAIN */
+
+.container{
+    max-width:1200px;
+    margin:auto;
+}
+
+
+/* HERO */
+
+.hero{
+    margin:20px;
+    padding:45px 20px;
+    background:white;
+    text-align:center;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.hero h1{
+    color:#008f4c;
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    color:#666;
+    margin-bottom:20px;
+}
+
+.hero button{
+    border:0;
+    padding:12px 25px;
+    background:#008f4c;
+    color:white;
+    border-radius:7px;
+    font-size:16px;
+}
+
+
+/* SECTION */
+
+.section{
+    padding:10px 20px;
+    margin-bottom:25px;
+}
+
+.section h2{
+    margin-bottom:15px;
+}
+
+
+/* CATEGORY */
+
+.categories{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:12px;
+}
+
+.category{
+    background:white;
+    padding:18px 8px;
+    text-align:center;
+    border-radius:9px;
+    box-shadow:0 2px 7px rgba(0,0,0,.08);
+    transition:.2s;
+    cursor:pointer;
+}
+
+.category:hover{
+    background:#eaf8f0;
+    transform:translateY(-2px);
+}
+
+.category span{
+    display:block;
+    font-size:32px;
+    margin-bottom:8px;
+}
+
+.category.active{
+    border:2px solid #008f4c;
+    background:#eaf8f0;
+}
+
+
+/* PRODUCTS */
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.product{
+    background:white;
+    padding:12px;
+    border-radius:9px;
+    box-shadow:0 2px 7px rgba(0,0,0,.08);
+    transition:.2s;
+    cursor:pointer;
+}
+
+.product:hover{
+    transform:translateY(-3px);
+}
+
+.product-image{
+    width:100%;
+    height:180px;
+    background:#edf1ef;
+    border-radius:7px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+}
+
+.product-image img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+.emoji-image{
+    font-size:65px;
+}
+
+.product h3{
+    margin-top:10px;
+    font-size:16px;
+}
+
+.product-category{
+    margin-top:5px;
+    color:#777;
+    font-size:13px;
+}
+
+.old-price{
+    margin-top:7px;
+    color:#888;
+    text-decoration:line-through;
+    font-size:13px;
+}
+
+.product-price{
+    margin-top:5px;
+    color:#008f4c;
+    font-size:19px;
+    font-weight:bold;
+}
+
+.discount-badge{
+    display:inline-block;
+    margin-top:7px;
+    background:#e53935;
+    color:white;
+    padding:4px 7px;
+    border-radius:5px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.product-stock{
+    margin-top:7px;
+    color:#1769aa;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.no-products{
+    background:white;
+    padding:35px;
+    text-align:center;
+    border-radius:10px;
+    color:#777;
+    grid-column:1/-1;
+}
+
+
+/* DETAILS */
+
+#detailsPage{
+    display:none;
+    padding:20px;
+}
+
+.details-box{
+    max-width:900px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,.1);
+}
+
+.back-btn{
+    border:0;
+    padding:10px 15px;
+    background:#eee;
+    border-radius:7px;
+    margin-bottom:20px;
+}
+
+.details-content{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+}
+
+.details-image{
+    width:100%;
+    height:400px;
+    background:#edf1ef;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+}
+
+.details-image img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+.details-info h1{
+    color:#008f4c;
+    margin-bottom:10px;
+}
+
+.details-price{
+    color:#008f4c;
+    font-size:28px;
+    font-weight:bold;
+    margin:15px 0;
+}
+
+.details-description{
+    margin:15px 0;
+    line-height:1.6;
+    color:#555;
+}
+
+.buy-btn,
+.add-btn{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:7px;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.buy-btn{
+    background:#ff9800;
+}
+
+.add-btn{
+    background:#008f4c;
+}
+
+
+/* CART */
+
+#cartPage,
+#checkoutPage,
+#successPage{
+    display:none;
+    padding:20px;
+}
+
+.box{
+    max-width:850px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,.1);
+}
+
+.cart-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:15px 0;
+    border-bottom:1px solid #ddd;
+}
+
+.cart-img{
+    width:70px;
+    height:70px;
+    background:#eee;
+    border-radius:7px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.cart-img img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+.cart-info{
+    flex:1;
+}
+
+.cart-price{
+    color:#008f4c;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.quantity{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:8px;
+}
+
+.quantity button{
+    width:30px;
+    height:30px;
+    border:0;
+    border-radius:5px;
+    background:#008f4c;
+    color:white;
+}
+
+.delete-btn{
+    border:0;
+    background:#e53935;
+    color:white;
+    padding:8px;
+    border-radius:5px;
+}
+
+.total{
+    display:flex;
+    justify-content:space-between;
+    font-size:21px;
+    font-weight:bold;
+    margin-top:20px;
+    padding-top:15px;
+    border-top:2px solid #ddd;
+}
+
+.total span{
+    color:#008f4c;
+}
+
+.action-btn{
+    width:100%;
+    border:0;
+    padding:14px;
+    margin-top:15px;
+    border-radius:7px;
+    background:#008f4c;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+}
+
+.gray-btn{
+    background:#eee;
+    color:#222;
+}
+
+
+/* CHECKOUT */
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    outline:none;
+}
+
+.form-group textarea{
+    min-height:90px;
+}
+
+.delivery-info{
+    background:#eaf8f0;
+    border:1px solid #b7e4c9;
+    padding:14px;
+    border-radius:8px;
+    margin-bottom:15px;
+}
+
+.delivery-info h3{
+    color:#008f4c;
+    margin-bottom:8px;
+}
+
+.delivery-info p{
+    margin:5px 0;
+    color:#444;
+}
+
+.summary{
+    background:#f5f7f6;
+    padding:15px;
+    border-radius:8px;
+    margin:20px 0;
+}
+
+.summary-row{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin:8px 0;
+}
+
+.summary-total{
+    border-top:1px solid #ccc;
+    padding-top:12px;
+    font-size:20px;
+    font-weight:bold;
+    color:#008f4c;
+}
+
+
+/* SUCCESS */
+
+.success{
+    text-align:center;
+    padding:35px 10px;
+}
+
+.success-icon{
+    font-size:65px;
+}
+
+.success h1{
+    color:#008f4c;
+    margin:15px 0;
+}
+
+.order-id{
+    background:#f5f7f6;
+    padding:12px;
+    border-radius:7px;
+    margin:20px 0;
+    font-weight:bold;
+}
+
+
+/* FOOTER */
+
+footer{
+    margin-top:30px;
+    background:#006b38;
+    color:white;
+    text-align:center;
+    padding:30px 10px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .top{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .search{
+        max-width:none;
+    }
+
+    .account{
+        justify-content:center;
+    }
+
+    .categories{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .products{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .product-image{
+        height:140px;
+    }
+
+    .details-content{
+        grid-template-columns:1fr;
+    }
+
+    .details-image{
+        height:300px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+<div class="top">
+
+<div class="logo">
+NEXVORA
+</div>
+
+
+<div class="search">
+
+<input
+id="searchInput"
+type="text"
+placeholder="Search products..."
+>
+
+<button onclick="searchProducts()">
+Search
+</button>
+
+</div>
+
+
+<div class="account">
+
+<span id="welcomeUser"></span>
+
+<a href="login.html" id="loginLink">
+Login
+</a>
+
+<a href="register.html" id="registerLink">
+Register
+</a>
+
+<button
+id="logoutButton"
+onclick="logoutUser()"
+style="display:none;">
+Logout
+</button>
+
+<button
+onclick="showCart()"
+style="border:0;background:none;color:white;">
+
+🛒 Cart
+<span id="cartCount">0</span>
+
+</button>
+
+</div>
+
+</div>
+
+
+<nav>
+
+<a href="#" onclick="showHome()">
+Home
+</a>
+
+<a href="#categories">
+Categories
+</a>
+
+<a href="#products">
+Products
+</a>
+
+<a href="seller.html">
+Become a Seller
+</a>
+
+</nav>
+
+</header>
+
+
+<!-- HOME -->
+
+<div id="homePage">
+
+<div class="container">
+
+
+<section class="hero">
+
+<h1>
+Welcome to NEXVORA
+</h1>
+
+<p>
+Your trusted online marketplace
+</p>
+
+<button onclick="goToProducts()">
+🛍️ Shop Now
+</button>
+
+</section>
+
+
+<!-- CATEGORIES -->
+
+<section class="section" id="categories">
+
+<h2>
+🛍️ Product Categories
+</h2>
+
+
+<div class="categories">
+
+
+<div class="category" data-category="Men's Fashion">
+
+<span>👕</span>
+Men's Fashion
+
+</div>
+
+
+<div class="category" data-category="Women's Fashion">
+
+<span>👗</span>
+Women's Fashion
+
+</div>
+
+
+<div class="category" data-category="Electronics">
+
+<span>📱</span>
+Electronics
+
+</div>
+
+
+<div class="category" data-category="Mobile & Accessories">
+
+<span>📱</span>
+Mobile & Accessories
+
+</div>
+
+
+<div class="category" data-category="Home & Living">
+
+<span>🏠</span>
+Home & Living
+
+</div>
+
+
+<div class="category" data-category="Beauty & Personal Care">
+
+<span>💄</span>
+Beauty & Personal Care
+
+</div>
+
+
+<div class="category" data-category="Sports">
+
+<span>⚽</span>
+Sports
+
+</div>
+
+
+<div class="category" data-category="Kids & Toys">
+
+<span>🧸</span>
+Kids & Toys
+
+</div>
+
+
+<div class="category" data-category="Groceries">
+
+<span>🛒</span>
+Groceries
+
+</div>
+
+
+<div class="category" data-category="Shoes">
+
+<span>👟</span>
+Shoes
+
+</div>
+
+
+<div class="category" data-category="Bags">
+
+<span>👜</span>
+Bags
+
+</div>
+
+
+<div class="category" data-category="Watches">
+
+<span>⌚</span>
+Watches
+
+</div>
+
+
+<div class="category" data-category="Other">
+
+<span>📦</span>
+Other
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- PRODUCTS -->
+
+<section class="section" id="products">
+
+<h2 id="productTitle">
+🔥 Featured Products
+</h2>
+
+
+<div
+class="products"
+id="productList">
+</div>
+
+</section>
+
+</div>
+
+
+<footer>
+
+<h3>
+NEXVORA
+</h3>
+
+<p>
+Shop Smart. Shop Easy.
+</p>
+
+<p>
+© 2026 NEXVORA. All Rights Reserved.
+</p>
+
+</footer>
+
+</div>
+
+
+<!-- PRODUCT DETAILS -->
+
+<div id="detailsPage">
+
+<div class="details-box">
+
+<button
+class="back-btn"
+onclick="showHome()">
+
+← Back to Products
+
+</button>
+
+
+<div id="detailsContent"></div>
+
+</div>
+
+</div>
+
+
+<!-- CART -->
+
+<div id="cartPage">
+
+<div class="box">
+
+<h1>
+🛒 My Cart
+</h1>
+
+<br>
+
+<div id="cartItems"></div>
+
+<div class="total">
+
+<span>Total</span>
+
+<span id="cartTotal">
+৳0
+</span>
+
+</div>
+
+<button
+class="action-btn"
+onclick="showCheckout()">
+
+⚡ Proceed to Checkout
+
+</button>
+
+
+<button
+class="action-btn gray-btn"
+onclick="showHome()">
+
+← Continue Shopping
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- CHECKOUT -->
+
+<div id="checkoutPage">
+
+<div class="box">
+
+<h1 style="color:#008f4c;">
+📦 Checkout
+</h1>
+
+<br>
+
+
+<div class="form-group">
+
+<label>
+Full Name
+</label>
+
+<input
+id="customerName"
+type="text"
+placeholder="Enter your full name"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Phone Number
+</label>
+
+<input
+id="customerPhone"
+type="tel"
+placeholder="Enter phone number"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Delivery Address
+</label>
+
+<textarea
+id="customerAddress"
+placeholder="Enter full delivery address"
+></textarea>
+
+</div>
+
+
+<!-- DELIVERY AREA -->
+
+<div class="form-group">
+
+<label>
+🚚 Delivery Area
+</label>
+
+<select
+id="deliveryArea"
+onchange="calculateDelivery()"
+>
+
+<option value="">
+Select delivery area
+</option>
+
+<option value="Dhaka">
+🏠 Dhaka City — Delivery Charge ৳60
+</option>
+
+<option value="Outside Dhaka">
+🚚 Outside Dhaka — Delivery Charge ৳130
+</option>
+
+</select>
+
+</div>
+
+
+<div class="delivery-info">
+
+<h3>
+🚚 Delivery Charge Information
+</h3>
+
+<p>
+🏠 <strong>ঢাকার ভিতরে:</strong> ৳60
+</p>
+
+<p>
+🚚 <strong>ঢাকার বাইরে:</strong> ৳130
+</p>
+
+<p>
+আপনার Delivery Area নির্বাচন করলে চার্জ অটোমেটিক যোগ হবে।
+</p>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Payment Method
+</label>
+
+<select id="paymentMethod">
+
+<option value="">
+Select payment method
+</option>
+
+<option>
+Cash on Delivery
+</option>
+
+<option>
+bKash
+</option>
+
+<option>
+Nagad
+</option>
+
+</select>
+
+</div>
+
+
+<div class="summary">
+
+<h3>
+🛒 Order Summary
+</h3>
+
+<br>
+
+<div id="checkoutItems"></div>
+
+
+<div class="summary-row">
+
+<span>
+Subtotal
+</span>
+
+<span id="checkoutSubtotal">
+৳0
+</span>
+
+</div>
+
+
+<div class="summary-row">
+
+<span>
+Delivery Area
+</span>
+
+<span id="checkoutDeliveryArea">
+Not Selected
+</span>
+
+</div>
+
+
+<div class="summary-row">
+
+<span>
+Delivery Charge
+</span>
+
+<span id="checkoutDeliveryCharge">
+৳0
+</span>
+
+</div>
+
+
+<div class="summary-row summary-total">
+
+<span>
+Total
+</span>
+
+<span id="checkoutTotal">
+৳0
+</span>
+
+</div>
+
+</div>
+
+
+<button
+class="action-btn"
+onclick="placeOrder()">
+
+✅ Place Order
+
+</button>
+
+
+<button
+class="action-btn gray-btn"
+onclick="showCart()">
+
+← Back to Cart
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- SUCCESS -->
+
+<div id="successPage">
+
+<div class="box success">
+
+<div class="success-icon">
+✅
+</div>
+
+<h1>
+Order Placed Successfully!
+</h1>
+
+<p>
+Thank you for shopping with NEXVORA.
+</p>
+
+
+<div class="order-id">
+
+Order ID:
+<span id="orderId">
+NEX-000000
+</span>
+
+</div>
+
+
+<button
+class="action-btn"
+onclick="showHome()">
+
+Continue Shopping
+
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =====================================
+   STORAGE
+===================================== */
+
+function getProducts(){
+
+    return JSON.parse(
+        localStorage.getItem(
+            "nexvoraProducts"
+        )
+    ) || [];
+
+}
+
+
+function getCart(){
+
+    return JSON.parse(
+        localStorage.getItem(
+            "nexvoraCart"
+        )
+    ) || [];
+
+}
+
+
+/* =====================================
+   PRICE
+===================================== */
+
+function finalPrice(product){
+
+    if(
+        product.finalPrice !== undefined
+    ){
+
+        return Number(
+            product.finalPrice
+        );
+
+    }
+
+
+    let price =
+        Number(product.price) || 0;
+
+
+    let discount =
+        Number(product.discount) || 0;
+
+
+    return price -
+        (
+            price *
+            discount /
+            100
+        );
+
+}
+
+
+/* =====================================
+   IMAGE
+===================================== */
+
+function imageHTML(product){
+
+    if(!product.image){
+
+        return `
+            <div class="emoji-image">
+                📦
+            </div>
+        `;
+
+    }
+
+
+    if(
+        String(product.image)
+        .startsWith("data:image")
+    ){
+
+        return `
+            <img
+                src="${product.image}"
+                alt="${product.name || "Product"}"
+            >
+        `;
+
+    }
+
+
+    return `
+        <div class="emoji-image">
+            📦
+        </div>
+    `;
+
+}
+
+
+/* =====================================
+   LOAD PRODUCTS
+===================================== */
+
+function loadProducts(
+    category = ""
+){
+
+    const products =
+        getProducts();
+
+
+    const list =
+        document.getElementById(
+            "productList"
+        );
+
+
+    const title =
+        document.getElementById(
+            "productTitle"
+        );
+
+
+    let filtered =
+        products;
+
+
+    if(category){
+
+        filtered =
+            products.filter(
+                function(product){
+
+                    return String(
+                        product.category || ""
+                    )
+                    .toLowerCase()
+                    ===
+                    category.toLowerCase();
+
+                }
+            );
+
+    }
+
+
+    list.innerHTML = "";
+
+
+    if(category){
+
+        title.textContent =
+            "🛍️ " + category;
+
+    }else{
+
+        title.textContent =
+            "🔥 Featured Products";
+
+    }
+
+
+    if(filtered.length === 0){
+
+        list.innerHTML = `
+
+            <div class="no-products">
+
+                <h3>
+                    📦 No Products Found
+                </h3>
+
+                <br>
+
+                <p>
+                    ${
+                        category
+                        ?
+                        "No products available in " +
+                        category
+                        :
+                        "Products published by sellers will appear here."
+                    }
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    filtered.forEach(
+        function(product){
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "product";
+
+
+            const price =
+                finalPrice(product);
+
+
+            const discount =
+                Number(
+                    product.discount
+                ) || 0;
+
+
+            const stock =
+                Number(
+                    product.stock
+                ) || 0;
+
+
+            card.innerHTML = `
+
+                <div class="product-image">
+
+                    ${imageHTML(product)}
+
+                </div>
+
+
+                <h3>
+                    ${product.name || "Product"}
+                </h3>
+
+
+                <div class="product-category">
+
+                    ${product.category || "Other"}
+
+                </div>
+
+
+                ${
+                    discount > 0
+                    ?
+                    `
+                    <div class="discount-badge">
+
+                        ${discount}% OFF
+
+                    </div>
+
+                    <div class="old-price">
+
+                        ৳${Number(
+                            product.price || 0
+                        ).toLocaleString()}
+
+                    </div>
+                    `
+                    :
+                    ""
+                }
+
+
+                <div class="product-price">
+
+                    ৳${price.toLocaleString()}
+
+                </div>
+
+
+                <div class="product-stock">
+
+                    ${
+                        stock > 0
+                        ?
+                        "📦 " + stock + " in stock"
+                        :
+                        "❌ Out of stock"
+                    }
+
+                </div>
+
+            `;
+
+
+            card.onclick =
+                function(){
+
+                    showDetails(
+                        product.id
+                    );
+
+                };
+
+
+            list.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================
+   CATEGORY CLICK
+===================================== */
+
+document
+.querySelectorAll(".category")
+.forEach(
+    function(category){
+
+        category.onclick =
+            function(){
+
+                document
+                .querySelectorAll(
+                    ".category"
+                )
+                .forEach(
+                    function(item){
+
+                        item.classList.remove(
+                            "active"
+                        );
+
+                    }
+                );
+
+
+                this.classList.add(
+                    "active"
+                );
+
+
+                loadProducts(
+                    this.dataset.category
+                );
+
+
+                document
+                .getElementById(
+                    "products"
+                )
+                .scrollIntoView({
+                    behavior:"smooth"
+                });
+
+            };
+
+    }
+);
+
+
+/* =====================================
+   DETAILS
+===================================== */
+
+function showDetails(id){
+
+    const products =
+        getProducts();
+
+
+    const product =
+        products.find(
+            function(item){
+
+                return String(item.id)
+                ===
+                String(id);
+
+            }
+        );
+
+
+    if(!product){
+
+        alert(
+            "Product not found."
+        );
+
+        return;
+
+    }
+
+
+    const price =
+        finalPrice(product);
+
+
+    const discount =
+        Number(product.discount) || 0;
+
+
+    const stock =
+        Number(product.stock) || 0;
+
+
+    const content =
+        document.getElementById(
+            "detailsContent"
+        );
+
+
+    content.innerHTML = `
+
+        <div class="details-content">
+
+
+            <div class="details-image">
+
+                ${imageHTML(product)}
+
+            </div>
+
+
+            <div class="details-info">
+
+                <h1>
+                    ${product.name}
+                </h1>
+
+
+                <p>
+                    Category:
+                    <strong>
+                        ${product.category || "Other"}
+                    </strong>
+                </p>
+
+
+                ${
+                    discount > 0
+                    ?
+                    `
+                    <div class="discount-badge">
+                        ${discount}% OFF
+                    </div>
+
+                    <div class="old-price">
+                        ৳${Number(
+                            product.price || 0
+                        ).toLocaleString()}
+                    </div>
+                    `
+                    :
+                    ""
+                }
+
+
+                <div class="details-price">
+
+                    ৳${price.toLocaleString()}
+
+                </div>
+
+
+                <p>
+                    📦 Stock:
+                    <strong>
+                        ${stock}
+                    </strong>
+                </p>
+
+
+                <div class="details-description">
+
+                    <strong>
+                        Product Description
+                    </strong>
+
+                    <br><br>
+
+                    ${product.description || "No description available."}
+
+                </div>
+
+
+                <button
+                    class="add-btn"
+                    onclick="addToCartById('${product.id}')">
+
+                    🛒 Add to Cart
+
+                </button>
+
+
+                <button
+                    class="buy-btn"
+                    onclick="buyNowById('${product.id}')">
+
+                    ⚡ Buy Now
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    document.getElementById(
+        "homePage"
+    ).style.display="none";
+
+
+    document.getElementById(
+        "cartPage"
+    ).style.display="none";
+
+
+    document.getElementById(
+        "checkoutPage"
+    ).style.display="none";
+
+
+    document.getElementById(
+        "successPage"
+    ).style.display="none";
+
+
+    document.getElementById(
+        "detailsPage"
+    ).style.display="block";
+
+
+    window.scrollTo(
+        0,
+        0
+    );
+
+}
+
+
+/* =====================================
+   ADD TO CART
+===================================== */
+
+function addToCartById(id){
+
+    const products =
+        getProducts();
+
+
+    const product =
+        products.find(
+            function(item){
+
+                return String(item.id)
+                ===
+                String(id);
+
+            }
+        );
+
+
+    if(!product){
+
+        return;
+
+    }
+
+
+    let cart =
+        getCart();
+
+
+    const existing =
+        cart.find(
+            function(item){
+
+                return String(item.id)
+                ===
+                String(id);
+
+            }
+        );
+
+
+    if(existing){
+
+        existing.quantity =
+            Number(
+                existing.quantity
+            ) + 1;
+
+    }else{
+
+        cart.push({
+
+            id:
+                product.id,
+
+            name:
+                product.name,
+
+            price:
+                finalPrice(product),
+
+            image:
+                product.image,
+
+            quantity:
+                1
+
+        });
+
+    }
+
+
+    localStorage.setItem(
+        "nexvoraCart",
+        JSON.stringify(cart)
+    );
+
+
+    updateCart();
+
+
+    alert(
+        "✅ Product added to cart!"
+    );
+
+}
+
+
+/* =====================================
+   BUY NOW
+===================================== */
+
+function buyNowById(id){
+
+    addToCartById(id);
+
+    showCheckout();
+
+}
+
+
+/* =====================================
+   CART
+===================================== */
+
+function showCart(){
+
+    hidePages();
+
+
+    document.getElementById(
+        "cartPage"
+    ).style.display="block";
+
+
+    renderCart();
+
+
+    window.scrollTo(
+        0,
+        0
+    );
+
+}
+
+
+function renderCart(){
+
+    const cart =
+        getCart();
+
+
+    const box =
+        document.getElementById(
+            "cartItems"
+        );
+
+
+    const totalBox =
+        document.getElementById(
+            "cartTotal"
+        );
+
+
+    box.innerHTML = "";
+
+
+    let total = 0;
+
+
+    if(cart.length === 0){
+
+        box.innerHTML = `
+
+            <div class="no-products">
+
+                🛒 Your Cart is Empty
+
+            </div>
+
+        `;
+
+
+        totalBox.textContent =
+            "৳0";
+
+
+        updateCart();
+
+        return;
+
+    }
+
+
+    cart.forEach(
+        function(item,index){
+
+            const itemTotal =
+                Number(item.price)
+                *
+                Number(item.quantity);
+
+
+            total +=
+                itemTotal;
+
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "cart-item";
+
+
+            div.innerHTML = `
+
+                <div class="cart-img">
+
+                    ${
+                        item.image
+                        &&
+                        String(item.image)
+                        .startsWith("data:image")
+                        ?
+                        `
+                        <img
+                            src="${item.image}"
+                            alt="${item.name}"
+                        >
+                        `
+                        :
+                        "📦"
+                    }
+
+                </div>
+
+
+                <div class="cart-info">
+
+                    <strong>
+                        ${item.name}
+                    </strong>
+
+
+                    <div class="cart-price">
+
+                        ৳${Number(
+                            item.price
+                        ).toLocaleString()}
+
+                    </div>
+
+
+                    <div class="quantity">
+
+                        <button
+                            onclick="changeQty(${index},-1)">
+
+                            −
+
+                        </button>
+
+
+                        <span>
+                            ${item.quantity}
+                        </span>
+
+
+                        <button
+                            onclick="changeQty(${index},1)">
+
+                            +
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="delete-btn"
+                    onclick="removeCart(${index})">
+
+                    🗑️
+
+                </button>
+
+            `;
+
+
+            box.appendChild(
+                div
+            );
+
+        }
+    );
+
+
+    totalBox.textContent =
+        "৳"
+        +
+        total.toLocaleString();
+
+
+    updateCart();
+
+}
+
+
+function changeQty(
+    index,
+    change
+){
+
+    let cart =
+        getCart();
+
+
+    if(!cart[index]){
+
+        return;
+
+    }
+
+
+    cart[index].quantity =
+        Number(
+            cart[index].quantity
+        )
+        +
+        change;
+
+
+    if(
+        cart[index].quantity <= 0
+    ){
+
+        cart.splice(
+            index,
+            1
+        );
+
+    }
+
+
+    localStorage.setItem(
+        "nexvoraCart",
+        JSON.stringify(cart)
+    );
+
+
+    renderCart();
+
+}
+
+
+function removeCart(index){
+
+    let cart =
+        getCart();
+
+
+    cart.splice(
+        index,
+        1
+    );
+
+
+    localStorage.setItem(
+        "nexvoraCart",
+        JSON.stringify(cart)
+    );
+
+
+    renderCart();
+
+}
+
+
+function updateCart(){
+
+    const cart =
+        getCart();
+
+
+    let count = 0;
+
+
+    cart.forEach(
+        function(item){
+
+            count +=
+                Number(
+                    item.quantity
+                );
+
+        }
+    );
+
+
+    document.getElementById(
+        "cartCount"
+    ).textContent =
+        count;
+
+}
+
+
+/* =====================================
+   DELIVERY CHARGE
+===================================== */
+
+function getDeliveryCharge(){
+
+    const area =
+        document.getElementById(
+            "deliveryArea"
+        ).value;
+
+
+    if(area === "Dhaka"){
+
+        return 60;
+
+    }
+
+
+    if(area === "Outside Dhaka"){
+
+        return 130;
+
+    }
+
+
+    return 0;
+
+}
+
+
+/* =====================================
+   CALCULATE DELIVERY
+===================================== */
+
+function calculateDelivery(){
+
+    const area =
+        document.getElementById(
+            "deliveryArea"
+        ).value;
+
+
+    const charge =
+        getDeliveryCharge();
+
+
+    const cart =
+        getCart();
+
+
+    let subtotal = 0;
+
+
+    cart.forEach(
+        function(item){
+
+            subtotal +=
+                Number(item.price)
+                *
+                Number(item.quantity);
+
+        }
+    );
+
+
+    let areaText =
+        "Not Selected";
+
+
+    if(area === "Dhaka"){
+
+        areaText =
+            "Dhaka";
+
+    }
+
+
+    if(area === "Outside Dhaka"){
+
+        areaText =
+            "Outside Dhaka";
+
+    }
+
+
+    document.getElementById(
+        "checkoutDeliveryArea"
+    ).textContent =
+        areaText;
+
+
+    document.getElementById(
+        "checkoutDeliveryCharge"
+    ).textContent =
+        "৳"
+        +
+        charge.toLocaleString();
+
+
+    document.getElementById(
+        "checkoutTotal"
+    ).textContent =
+        "৳"
+        +
+        (
+            subtotal + charge
+        ).toLocaleString();
+
+}
+
+
+/* =====================================
+   CHECKOUT
+===================================== */
+
+function showCheckout(){
+
+    const cart =
+        getCart();
+
+
+    if(cart.length === 0){
+
+        alert(
+            "Your cart is empty."
+        );
+
+        return;
+
+    }
+
+
+    hidePages();
+
+
+    document.getElementById(
+        "checkoutPage"
+    ).style.display="block";
+
+
+    renderCheckout();
+
+
+    window.scrollTo(
+        0,
+        0
+    );
+
+}
+
+
+function renderCheckout(){
+
+    const cart =
+        getCart();
+
+
+    const list =
+        document.getElementById(
+            "checkoutItems"
+        );
+
+
+    let subtotal = 0;
+
+
+    list.innerHTML = "";
+
+
+    cart.forEach(
+        function(item){
+
+            const amount =
+                Number(item.price)
+                *
+                Number(item.quantity);
+
+
+            subtotal +=
+                amount;
+
+
+            list.innerHTML += `
+
+                <div class="summary-row">
+
+                    <span>
+                        ${item.name}
+                        ×${item.quantity}
+                    </span>
+
+                    <span>
+                        ৳${amount.toLocaleString()}
+                    </span>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    document.getElementById(
+        "checkoutSubtotal"
+    ).textContent =
+        "৳"
+        +
+        subtotal.toLocaleString();
+
+
+    calculateDelivery();
+
+}
+
+
+/* =====================================
+   PLACE ORDER
+===================================== */
+
+function placeOrder(){
+
+    const name =
+        document.getElementById(
+            "customerName"
+        ).value.trim();
+
+
+    const phone =
+        document.getElementById(
+            "customerPhone"
+        ).value.trim();
+
+
+    const address =
+        document.getElementById(
+            "customerAddress"
+        ).value.trim();
+
+
+    const deliveryArea =
+        document.getElementById(
+            "deliveryArea"
+        ).value;
+
+
+    const payment =
+        document.getElementById(
+            "paymentMethod"
+        ).value;
+
+
+    if(!name){
+
+        alert(
+            "Please enter your name."
+        );
+
+        return;
+
+    }
+
+
+    if(!phone){
+
+        alert(
+            "Please enter your phone number."
+        );
+
+        return;
+
+    }
+
+
+    if(!address){
+
+        alert(
+            "Please enter your address."
+        );
+
+        return;
+
+    }
+
+
+    if(!deliveryArea){
+
+        alert(
+            "Please select your delivery area."
+        );
+
+        return;
+
+    }
+
+
+    if(!payment){
+
+        alert(
+            "Please select payment method."
+        );
+
+        return;
+
+    }
+
+
+    const cart =
+        getCart();
+
+
+    let subtotal = 0;
+
+
+    cart.forEach(
+        function(item){
+
+            subtotal +=
+                Number(item.price)
+                *
+                Number(item.quantity);
+
+        }
+    );
+
+
+    const deliveryCharge =
+        getDeliveryCharge();
+
+
+    const total =
+        subtotal +
+        deliveryCharge;
+
+
+    const orderId =
+        "NEX-"
+        +
+        Date.now()
+        .toString()
+        .slice(-6);
+
+
+    const order = {
+
+        id:
+            orderId,
+
+        name:
+            name,
+
+        phone:
+            phone,
+
+        address:
+            address,
+
+        deliveryArea:
+            deliveryArea,
+
+        deliveryCharge:
+            deliveryCharge,
+
+        subtotal:
+            subtotal,
+
+        total:
+            total,
+
+        payment:
+            payment,
+
+        items:
+            getCart(),
+
+        date:
+            new Date()
+            .toLocaleString()
+
+    };
+
+
+    let orders =
+        JSON.parse(
+            localStorage.getItem(
+                "nexvoraOrders"
+            )
+        )
+        || [];
+
+
+    orders.push(
+        order
+    );
+
+
+    localStorage.setItem(
+        "nexvoraOrders",
+        JSON.stringify(
+            orders
+        )
+    );
+
+
+    localStorage.removeItem(
+        "nexvoraCart"
+    );
+
+
+    document.getElementById(
+        "orderId"
+    ).textContent =
+        orderId;
+
+
+    hidePages();
+
+
+    document.getElementById(
+        "successPage"
+    ).style.display="block";
+
+
+    updateCart();
+
+
+    window.scrollTo(
+        0,
+        0
+    );
+
+}
+
+
+/* =====================================
+   SEARCH
+===================================== */
+
+function searchProducts(){
+
+    const text =
+        document.getElementById(
+            "searchInput"
+        ).value
+        .trim()
+        .toLowerCase();
+
+
+    const products =
+        getProducts();
+
+
+    const result =
+        products.filter(
+            function(product){
+
+                return (
+
+                    String(
+                        product.name || ""
+                    )
+                    .toLowerCase()
+                    .includes(text)
+
+                    ||
+
+                    String(
+                        product.category || ""
+                    )
+                    .toLowerCase()
+                    .includes(text)
+
+                );
+
+            }
+        );
+
+
+    document
+    .querySelectorAll(".category")
+    .forEach(
+        function(item){
+
+            item.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+
+    const list =
+        document.getElementById(
+            "productList"
+        );
+
+
+    document.getElementById(
+        "productTitle"
+    ).textContent =
+        "🔍 Search Results";
+
+
+    list.innerHTML = "";
+
+
+    if(result.length === 0){
+
+        list.innerHTML = `
+
+            <div class="no-products">
+
+                <h3>
+                    🔍 Product Not Found
+                </h3>
+
+                <br>
+
+                <p>
+                    Try another product name.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    result.forEach(
+        function(product){
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "product";
+
+
+            const price =
+                finalPrice(product);
+
+
+            card.innerHTML = `
+
+                <div class="product-image">
+
+                    ${imageHTML(product)}
+
+                </div>
+
+
+                <h3>
+                    ${product.name}
+                </h3>
+
+
+                <div class="product-category">
+
+                    ${product.category || "Other"}
+
+                </div>
+
+
+                <div class="product-price">
+
+                    ৳${price.toLocaleString()}
+
+                </div>
+
+            `;
+
+
+            card.onclick =
+                function(){
+
+                    showDetails(
+                        product.id
+                    );
+
+                };
+
+
+            list.appendChild(
+                card
+            );
+
+        }
+    );
+
+
+    document.getElementById(
+        "products"
+    ).scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =====================================
+   PAGES
+===================================== */
+
+function hidePages(){
+
+    document.getElementById(
+        "homePage"
+    ).style.display="none";
+
+
+    document.getElementById(
+        "detailsPage"
+    ).style.display="none";
+
+
+    document.getElementById(
+        "cartPage"
+    ).style.display="none";
+
+
+    document.getElementById(
+        "checkoutPage"
+    ).style.display="none";
+
+
+    document.getElementById(
+        "successPage"
+    ).style.display="none";
+
+}
+
+
+function showHome(){
+
+    hidePages();
+
+
+    document.getElementById(
+        "homePage"
+    ).style.display="block";
+
+
+    loadProducts();
+
+
+    window.scrollTo(
+        0,
+        0
+    );
+
+}
+
+
+function goToProducts(){
+
+    document.getElementById(
+        "products"
+    ).scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =====================================
+   LOGIN
+===================================== */
+
+function checkLogin(){
+
+    const loggedIn =
+        localStorage.getItem(
+            "nexvoraLoggedIn"
+        );
+
+
+    const user =
+        JSON.parse(
+            localStorage.getItem(
+                "nexvoraUser"
+            )
+        );
+
+
+    const welcome =
+        document.getElementById(
+            "welcomeUser"
+        );
+
+
+    if(
+        loggedIn === "true"
+        &&
+        user
+    ){
+
+        welcome.textContent =
+            "Hi, " + user.name;
+
+
+        document.getElementById(
+            "loginLink"
+        ).style.display="none";
+
+
+        document.getElementById(
+            "registerLink"
+        ).style.display="none";
+
+
+        document.getElementById(
+            "logoutButton"
+        ).style.display="inline";
+
+    }
+
+}
+
+
+function logoutUser(){
+
+    localStorage.removeItem(
+        "nexvoraLoggedIn"
+    );
+
+
+    localStorage.removeItem(
+        "nexvoraUser"
+    );
+
+
+    alert(
+        "You have been logged out."
+    );
+
+
+    location.reload();
+
+}
+
+
+/* =====================================
+   START
+===================================== */
+
+loadProducts();
+
+checkLogin();
+
+updateCart();
+
+</script>
+
+</body>
+
+<script>
+    if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function() {
+            navigator.serviceWorker.register("service-worker.js")
+                .then(function() {
+                    console.log("NEXVORA App Ready");
+                })
+                .catch(function(error) {
+                    console.log("Service Worker Error:", error);
+                });
+        });
+    }
+</script>
+</html>
