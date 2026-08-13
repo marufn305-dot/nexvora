@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NEXVORA Seller Orders</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f7f5;
+    color:#222;
+}
+
+/* LOGIN */
+
+#loginScreen{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.loginBox{
+    width:100%;
+    max-width:400px;
+    background:white;
+    padding:30px 22px;
+    border-radius:12px;
+    box-shadow:0 3px 15px rgba(0,0,0,.12);
+}
+
+.loginBox h1{
+    color:#008f4c;
+    text-align:center;
+    margin-bottom:8px;
+}
+
+.loginBox p{
+    text-align:center;
+    color:#666;
+    margin-bottom:22px;
+}
+
+.loginBox input{
+    width:100%;
+    padding:13px;
+    margin-bottom:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:15px;
+}
+
+.loginBtn{
+    width:100%;
+    padding:13px;
+    border:0;
+    border-radius:7px;
+    background:#008f4c;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.loginBtn:active{
+    background:#006f3b;
+}
+
+.error{
+    color:#d00000;
+    text-align:center;
+    margin-top:12px;
+    display:none;
+}
+
+/* DASHBOARD */
+
+#ordersScreen{
+    display:none;
+}
+
+header{
+    background:#008f4c;
+    color:white;
+    padding:18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+header h1{
+    font-size:21px;
+}
+
+.headerButtons{
+    display:flex;
+    gap:8px;
+}
+
+.headerBtn{
+    background:white;
+    color:#008f4c;
+    border:0;
+    text-decoration:none;
+    padding:9px 12px;
+    border-radius:6px;
+    font-weight:bold;
+}
+
+.logoutBtn{
+    background:#d62828;
+    color:white;
+    border:0;
+    padding:9px 12px;
+    border-radius:6px;
+    font-weight:bold;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.title{
+    background:white;
+    padding:18px;
+    border-radius:10px;
+    margin-bottom:18px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.order{
+    background:white;
+    border-radius:10px;
+    padding:18px;
+    margin-bottom:18px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.order h2{
+    color:#008f4c;
+    margin-bottom:15px;
+    font-size:18px;
+}
+
+.info{
+    line-height:1.9;
+    margin-bottom:15px;
+}
+
+.items{
+    border-top:1px solid #ddd;
+    padding-top:12px;
+}
+
+.item{
+    padding:10px 0;
+    border-bottom:1px solid #eee;
+}
+
+.status{
+    margin-top:15px;
+    padding:12px;
+    background:#eaf8f0;
+    color:#008f4c;
+    border-radius:6px;
+    font-weight:bold;
+}
+
+.empty{
+    background:white;
+    padding:30px;
+    text-align:center;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- ==================================
+     SELLER LOGIN SCREEN
+================================== -->
+
+<div id="loginScreen">
+
+    <div class="loginBox">
+
+        <h1>NEXVORA</h1>
+
+        <p>Seller Center Login</p>
+
+        <input
+            type="text"
+            id="sellerEmail"
+            placeholder="Seller Email"
+        >
+
+        <input
+            type="password"
+            id="sellerPassword"
+            placeholder="Password"
+        >
+
+        <button
+            class="loginBtn"
+            onclick="sellerLogin()"
+        >
+            Login
+        </button>
+
+        <div id="loginError" class="error">
+            Please enter your seller email and password.
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==================================
+     ORDERS SCREEN
+================================== -->
+
+<div id="ordersScreen">
+
+    <header>
+
+        <h1>NEXVORA Seller Orders</h1>
+
+        <div class="headerButtons">
+
+            <a
+                href="seller-dashboard.html"
+                class="headerBtn"
+            >
+                Dashboard
+            </a>
+
+            <button
+                class="logoutBtn"
+                onclick="sellerLogout()"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <div class="container">
+
+        <div class="title">
+
+            <h2>🧾 Customer Orders</h2>
+
+            <p>
+                All customer orders will appear here.
+            </p>
+
+        </div>
+
+
+        <div id="ordersContainer"></div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==================================
+   CHECK SELLER LOGIN
+================================== */
+
+function checkSellerLogin(){
+
+    const loggedIn =
+        localStorage.getItem("sellerLoggedIn");
+
+    if(loggedIn === "true"){
+
+        document.getElementById("loginScreen").style.display =
+            "none";
+
+        document.getElementById("ordersScreen").style.display =
+            "block";
+
+        loadOrders();
+
+    }else{
+
+        document.getElementById("loginScreen").style.display =
+            "flex";
+
+        document.getElementById("ordersScreen").style.display =
+            "none";
+    }
+}
+
+
+/* ==================================
+   SELLER LOGIN
+================================== */
+
+function sellerLogin(){
+
+    const email =
+        document.getElementById("sellerEmail").value.trim();
+
+    const password =
+        document.getElementById("sellerPassword").value.trim();
+
+    const error =
+        document.getElementById("loginError");
+
+
+    if(email === "" || password === ""){
+
+        error.innerText =
+            "Please enter your seller email and password.";
+
+        error.style.display = "block";
+
+        return;
+    }
+
+
+    /*
+       Seller login successful
+    */
+
+    localStorage.setItem(
+        "sellerLoggedIn",
+        "true"
+    );
+
+    localStorage.setItem(
+        "sellerEmail",
+        email
+    );
+
+
+    error.style.display = "none";
+
+
+    checkSellerLogin();
+}
+
+
+/* ==================================
+   LOGOUT
+================================== */
+
+function sellerLogout(){
+
+    localStorage.removeItem(
+        "sellerLoggedIn"
+    );
+
+    localStorage.removeItem(
+        "sellerEmail"
+    );
+
+
+    document.getElementById("ordersScreen").style.display =
+        "none";
+
+    document.getElementById("loginScreen").style.display =
+        "flex";
+}
+
+
+/* ==================================
+   LOAD ORDERS
+================================== */
+
+function loadOrders(){
+
+    const container =
+        document.getElementById("ordersContainer");
+
+
+    let orders =
+        JSON.parse(
+            localStorage.getItem("orders")
+        ) || [];
+
+
+    if(orders.length === 0){
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                <h3>📦 No Orders Yet</h3>
+
+                <br>
+
+                <p>
+                    Customer orders will appear here
+                    when customers place orders.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    orders
+    .slice()
+    .reverse()
+    .forEach(function(order,index){
+
+        let itemsHTML = "";
+
+
+        /* PRODUCT ITEMS */
+
+        if(
+            order.items &&
+            Array.isArray(order.items)
+        ){
+
+            order.items.forEach(function(item){
+
+                itemsHTML += `
+
+                    <div class="item">
+
+                        <strong>
+                            ${item.name || "Product"}
+                        </strong>
+
+                        <br>
+
+                        Quantity:
+                        ${item.quantity || 1}
+
+                        <br>
+
+                        Price:
+                        ৳${item.price || 0}
+
+                    </div>
+
+                `;
+
+            });
+
+        }else{
+
+            itemsHTML = `
+
+                <div class="item">
+
+                    Product information unavailable
+
+                </div>
+
+            `;
+        }
+
+
+        /* ORDER CARD */
+
+        container.innerHTML += `
+
+            <div class="order">
+
+                <h2>
+
+                    🧾 Order ID:
+                    ${
+                        order.orderId ||
+                        "NEX-" + (index + 1)
+                    }
+
+                </h2>
+
+
+                <div class="info">
+
+                    👤
+                    <strong>Customer Name:</strong>
+                    ${order.customerName || "N/A"}
+
+                    <br>
+
+                    📞
+                    <strong>Phone:</strong>
+                    ${order.phone || "N/A"}
+
+                    <br>
+
+                    📍
+                    <strong>Delivery Address:</strong>
+                    ${order.address || "N/A"}
+
+                    <br>
+
+                    💳
+                    <strong>Payment Method:</strong>
+                    ${order.paymentMethod || "N/A"}
+
+                    <br>
+
+                    📅
+                    <strong>Order Date:</strong>
+                    ${order.date || "N/A"}
+
+                </div>
+
+
+                <div class="items">
+
+                    <h3>🛍️ Products</h3>
+
+                    ${itemsHTML}
+
+                </div>
+
+
+                <div class="status">
+
+                    📦 Status:
+                    ${order.status || "Pending"}
+
+                    <br><br>
+
+                    💰 Total:
+                    ৳${order.total || 0}
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+/* ==================================
+   START PAGE
+================================== */
+
+checkSellerLogin();
+
+</script>
+
+</body>
+</html>
