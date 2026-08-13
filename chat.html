@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NEXVORA - Online Chat</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f7f5;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .chat-container {
+      height: 100vh;
+      max-width: 650px;
+      margin: auto;
+      background: white;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-header {
+      background: #0b8f4d;
+      color: white;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      background: white;
+      color: #0b8f4d;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .header-text h1 {
+      font-size: 18px;
+    }
+
+    .header-text p {
+      font-size: 12px;
+      margin-top: 3px;
+      opacity: 0.9;
+    }
+
+    .messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 18px 12px;
+      background: #f7f9f8;
+    }
+
+    .message {
+      max-width: 82%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      line-height: 1.4;
+      word-wrap: break-word;
+    }
+
+    .admin {
+      background: #e4e8e6;
+      color: #222;
+      margin-right: auto;
+      border-bottom-left-radius: 3px;
+    }
+
+    .customer {
+      background: #0b8f4d;
+      color: white;
+      margin-left: auto;
+      border-bottom-right-radius: 3px;
+    }
+
+    .time {
+      display: block;
+      font-size: 10px;
+      opacity: 0.7;
+      margin-top: 4px;
+    }
+
+    .input-area {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px;
+      background: white;
+      border-top: 1px solid #ddd;
+    }
+
+    .input-area input {
+      flex: 1;
+      border: 1px solid #ddd;
+      border-radius: 22px;
+      padding: 12px 15px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .input-area input:focus {
+      border-color: #0b8f4d;
+    }
+
+    .send-btn {
+      width: 45px;
+      height: 45px;
+      border: none;
+      border-radius: 50%;
+      background: #0b8f4d;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      padding: 8px;
+      color: #0b8f4d;
+      text-decoration: none;
+      font-size: 13px;
+      background: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="chat-container">
+
+    <div class="chat-header">
+
+      <div class="logo">
+        N
+      </div>
+
+      <div class="header-text">
+        <h1>NEXVORA Support</h1>
+        <p>Online Customer Support</p>
+      </div>
+
+    </div>
+
+
+    <div
+      class="messages"
+      id="messages">
+
+      <div class="message admin">
+
+        Hello! Welcome to NEXVORA Support.
+        How can we help you?
+
+        <span class="time">
+          Support
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="input-area">
+
+      <input
+        type="text"
+        id="messageInput"
+        placeholder="Type a message..."
+        autocomplete="off">
+
+      <button
+        class="send-btn"
+        onclick="sendMessage()">
+        ➤
+      </button>
+
+    </div>
+
+
+    <a
+      href="contact.html"
+      class="back">
+      ← Back to Contact Support
+    </a>
+
+  </div>
+
+
+  <script>
+
+    const messages =
+      document.getElementById("messages");
+
+    const input =
+      document.getElementById("messageInput");
+
+
+    function getTime() {
+
+      return new Date()
+        .toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit"
+        });
+
+    }
+
+
+    function sendMessage() {
+
+      const text =
+        input.value.trim();
+
+
+      if (!text) {
+        return;
+      }
+
+
+      const message =
+        document.createElement("div");
+
+      message.className =
+        "message customer";
+
+
+      message.innerHTML = `
+        ${escapeHTML(text)}
+        <span class="time">
+          ${getTime()}
+        </span>
+      `;
+
+
+      messages.appendChild(message);
+
+
+      input.value = "";
+
+
+      messages.scrollTop =
+        messages.scrollHeight;
+
+    }
+
+
+    function escapeHTML(text) {
+
+      const div =
+        document.createElement("div");
+
+      div.textContent =
+        text;
+
+      return div.innerHTML;
+
+    }
+
+
+    input.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (event.key === "Enter") {
+          sendMessage();
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
