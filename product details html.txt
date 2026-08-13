@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NEXVORA Product Details</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f5f7f6;
+    color:#222;
+}
+
+header{
+    background:#008f4c;
+    color:white;
+    padding:16px;
+}
+
+.header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:bold;
+}
+
+.header a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.container{
+    width:92%;
+    max-width:900px;
+    margin:25px auto;
+}
+
+.product-box{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.1);
+}
+
+.product-image{
+    width:100%;
+    height:330px;
+    background:#e8eeee;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+}
+
+.product-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.product-icon{
+    font-size:110px;
+}
+
+h1{
+    margin-top:20px;
+    font-size:27px;
+}
+
+.price{
+    color:#008f4c;
+    font-size:25px;
+    font-weight:bold;
+    margin:12px 0;
+}
+
+.stock{
+    margin:10px 0;
+    color:#555;
+}
+
+.description{
+    margin-top:18px;
+    line-height:1.6;
+    color:#555;
+}
+
+.quantity-box{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-top:20px;
+}
+
+.quantity-box button{
+    width:38px;
+    height:38px;
+    border:none;
+    background:#008f4c;
+    color:white;
+    border-radius:6px;
+    font-size:20px;
+    cursor:pointer;
+}
+
+.quantity-box span{
+    font-size:18px;
+    font-weight:bold;
+    min-width:25px;
+    text-align:center;
+}
+
+.add-button{
+    width:100%;
+    margin-top:20px;
+    padding:15px;
+    border:none;
+    border-radius:8px;
+    background:#008f4c;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.cart-button{
+    width:100%;
+    margin-top:12px;
+    padding:14px;
+    border:none;
+    border-radius:8px;
+    background:#006b38;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.back{
+    display:block;
+    text-align:center;
+    margin-top:18px;
+    color:#008f4c;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+@media(max-width:600px){
+
+    .product-image{
+        height:260px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="header">
+
+<div class="logo">
+NEXVORA
+</div>
+
+<a href="products.html">
+Products
+</a>
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+<div class="product-box">
+
+<div
+class="product-image"
+id="productImage">
+
+</div>
+
+
+<h1 id="productName">
+Loading...
+</h1>
+
+
+<div
+class="price"
+id="productPrice">
+
+৳0
+
+</div>
+
+
+<div
+class="stock"
+id="productStock">
+
+</div>
+
+
+<div
+class="description"
+id="productDescription">
+
+</div>
+
+
+<div class="quantity-box">
+
+<button onclick="decreaseQuantity()">
+−
+</button>
+
+<span id="quantity">
+1
+</span>
+
+<button onclick="increaseQuantity()">
++
+</button>
+
+</div>
+
+
+<button
+class="add-button"
+onclick="addToCart()">
+
+🛒 Add to Cart
+
+</button>
+
+
+<button
+class="cart-button"
+onclick="openCart()">
+
+🛒 Open Cart
+
+</button>
+
+
+<a
+href="products.html"
+class="back">
+
+← Back to Products
+
+</a>
+
+</div>
+
+</div>
+
+
+<script>
+
+
+/* =========================
+   PRODUCT DATABASE
+========================= */
+
+const products = [
+
+{
+id:"demo1",
+name:"Smartphone",
+price:15999,
+stock:20,
+image:"",
+icon:"📱",
+description:
+"Modern smartphone with powerful features."
+},
+
+{
+id:"demo2",
+name:"Men's T-Shirt",
+price:599,
+stock:50,
+image:"",
+icon:"👕",
+description:
+"Comfortable men's fashion T-shirt."
+},
+
+{
+id:"demo3",
+name:"Wireless Headphone",
+price:1299,
+stock:30,
+image:"",
+icon:"🎧",
+description:
+"Wireless headphone for music and calls."
+},
+
+{
+id:"demo4",
+name:"Smart Watch",
+price:1899,
+stock:25,
+image:"",
+icon:"⌚",
+description:
+"Smart watch for everyday use."
+},
+
+{
+id:"demo5",
+name:"Running Shoes",
+price:2499,
+stock:15,
+image:"",
+icon:"👟",
+description:
+"Comfortable running shoes."
+},
+
+{
+id:"demo6",
+name:"Laptop",
+price:55000,
+stock:10,
+image:"",
+icon:"💻",
+description:
+"Powerful laptop for work and study."
+},
+
+{
+id:"demo7",
+name:"Gaming Controller",
+price:2199,
+stock:12,
+image:"",
+icon:"🎮",
+description:
+"Gaming controller for entertainment."
+},
+
+{
+id:"demo8",
+name:"Backpack",
+price:899,
+stock:30,
+image:"",
+icon:"🎒",
+description:
+"Strong and stylish backpack."
+}
+
+];
+
+
+/* =========================
+   SELLER PRODUCTS
+========================= */
+
+const sellerProducts =
+JSON.parse(
+localStorage.getItem("nexvoraProducts")
+) || [];
+
+
+sellerProducts.forEach(function(item){
+
+products.push({
+
+id:String(item.id),
+
+name:item.name,
+
+category:item.category,
+
+price:Number(item.price),
+
+stock:Number(item.stock),
+
+image:item.image || "",
+
+icon:"",
+
+discount:Number(item.discount || 0),
+
+description:
+item.description ||
+"No description available."
+
+});
+
+});
+
+
+/* =========================
+   GET PRODUCT ID
+========================= */
+
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+const productId =
+params.get("id");
+
+
+/* =========================
+   FIND PRODUCT
+========================= */
+
+const product =
+products.find(function(item){
+
+return String(item.id) ===
+String(productId);
+
+});
+
+
+let selectedQuantity = 1;
+
+
+/* =========================
+   SHOW PRODUCT
+========================= */
+
+function showProduct(){
+
+if(!product){
+
+document.getElementById(
+"productName"
+).innerText =
+"Product Not Found";
+
+document.getElementById(
+"productPrice"
+).innerText =
+"";
+
+document.getElementById(
+"productStock"
+).innerText =
+"";
+
+document.getElementById(
+"productDescription"
+).innerText =
+"Sorry, this product could not be found.";
+
+return;
+
+}
+
+
+document.getElementById(
+"productName"
+).innerText =
+product.name;
+
+
+document.getElementById(
+"productPrice"
+).innerText =
+"৳" +
+Number(product.price).toLocaleString();
+
+
+document.getElementById(
+"productStock"
+).innerText =
+"Available Stock: " +
+product.stock;
+
+
+document.getElementById(
+"productDescription"
+).innerText =
+product.description;
+
+
+const imageBox =
+document.getElementById(
+"productImage"
+);
+
+
+if(product.image){
+
+imageBox.innerHTML = `
+
+<img
+src="${product.image}"
+alt="${product.name}">
+
+`;
+
+}else{
+
+imageBox.innerHTML = `
+
+<div class="product-icon">
+${product.icon || "🛍️"}
+</div>
+
+`;
+
+}
+
+}
+
+
+/* =========================
+   QUANTITY
+========================= */
+
+function increaseQuantity(){
+
+if(!product){
+return;
+}
+
+
+if(
+selectedQuantity <
+Number(product.stock)
+){
+
+selectedQuantity++;
+
+document.getElementById(
+"quantity"
+).innerText =
+selectedQuantity;
+
+}
+
+}
+
+
+function decreaseQuantity(){
+
+if(selectedQuantity > 1){
+
+selectedQuantity--;
+
+document.getElementById(
+"quantity"
+).innerText =
+selectedQuantity;
+
+}
+
+}
+
+
+/* =========================
+   ADD TO CART
+========================= */
+
+function addToCart(){
+
+if(!product){
+
+alert(
+"Product not found."
+);
+
+return;
+
+}
+
+
+if(Number(product.stock) <= 0){
+
+alert(
+"Sorry, this product is out of stock."
+);
+
+return;
+
+}
+
+
+let cart =
+JSON.parse(
+localStorage.getItem("cart")
+) || [];
+
+
+const existingIndex =
+cart.findIndex(function(item){
+
+return item.productId ===
+product.id;
+
+});
+
+
+if(existingIndex !== -1){
+
+cart[existingIndex].quantity =
+(Number(
+cart[existingIndex].quantity
+) || 1) + selectedQuantity;
+
+}else{
+
+cart.push({
+
+productId:product.id,
+
+name:product.name,
+
+price:Number(product.price),
+
+image:product.image || "",
+
+quantity:selectedQuantity
+
+});
+
+}
+
+
+localStorage.setItem(
+"cart",
+JSON.stringify(cart)
+);
+
+
+alert(
+product.name +
+" added to cart!"
+);
+
+}
+
+
+/* =========================
+   OPEN CART
+========================= */
+
+function openCart(){
+
+window.location.href =
+"cart.html";
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+showProduct();
+
+</script>
+
+
+</body>
+
+</html>
