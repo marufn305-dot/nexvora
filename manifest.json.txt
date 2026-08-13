@@ -1,0 +1,10 @@
+{
+  "name": "NEXVORA",
+  "short_name": "NEXVORA",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#008000",
+  "description": "NEXVORA Online Marketplace",
+  "icons": []
+}
