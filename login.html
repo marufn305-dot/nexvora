@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>NEXVORA Login</title>
+
+<style>
+
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f3f7f5;
+}
+
+.container {
+  width: 92%;
+  max-width: 420px;
+  margin: 40px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+}
+
+.logo {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  color: #008f4c;
+  margin-bottom: 10px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 13px;
+  margin: 7px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.password-box {
+  position: relative;
+}
+
+.password-box input {
+  padding-right: 55px;
+}
+
+.eye {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 45px;
+  height: 42px;
+  border: none;
+  background: transparent;
+  color: #555;
+  font-size: 20px;
+  margin: 0;
+}
+
+.main-button {
+  width: 100%;
+  padding: 13px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 6px;
+  background: #008f4c;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.link {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.link a {
+  color: #008f4c;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+#registerBox {
+  display: none;
+}
+
+.back {
+  text-align: center;
+  margin-top: 18px;
+}
+
+.back a {
+  color: #555;
+  text-decoration: none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- LOGIN -->
+
+<div id="loginBox">
+
+<div class="logo">
+NEXVORA
+</div>
+
+<h2>Login</h2>
+
+<input
+type="text"
+id="loginEmailPhone"
+placeholder="Email or Phone Number">
+
+<div class="password-box">
+
+<input
+type="password"
+id="loginPassword"
+placeholder="Password">
+
+<button
+type="button"
+class="eye"
+onclick="togglePassword('loginPassword', this)">
+👁️
+</button>
+
+</div>
+
+<button
+class="main-button"
+type="button"
+onclick="loginUser()">
+
+Login
+
+</button>
+
+<div class="link">
+
+Don't have an account?
+
+<a href="#"
+onclick="showRegister()">
+
+Create Account
+
+</a>
+
+</div>
+
+<div class="back">
+
+<a href="index.html">
+← Back to Home
+</a>
+
+</div>
+
+</div>
+
+
+<!-- REGISTER -->
+
+<div id="registerBox">
+
+<div class="logo">
+NEXVORA
+</div>
+
+<h2>Create Account</h2>
+
+<input
+type="text"
+id="regName"
+placeholder="Full Name">
+
+<input
+type="text"
+id="regPhone"
+placeholder="Phone Number">
+
+<input
+type="email"
+id="regEmail"
+placeholder="Email Address">
+
+<div class="password-box">
+
+<input
+type="password"
+id="regPassword"
+placeholder="Password">
+
+<button
+type="button"
+class="eye"
+onclick="togglePassword('regPassword', this)">
+👁️
+</button>
+
+</div>
+
+<div class="password-box">
+
+<input
+type="password"
+id="regConfirmPassword"
+placeholder="Confirm Password">
+
+<button
+type="button"
+class="eye"
+onclick="togglePassword('regConfirmPassword', this)">
+👁️
+</button>
+
+</div>
+
+<button
+class="main-button"
+type="button"
+onclick="registerUser()">
+
+Create Account
+
+</button>
+
+<div class="link">
+
+Already have an account?
+
+<a href="#"
+onclick="showLogin()">
+
+Login
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+function showRegister() {
+
+document.getElementById("loginBox").style.display = "none";
+
+document.getElementById("registerBox").style.display = "block";
+
+}
+
+
+function showLogin() {
+
+document.getElementById("registerBox").style.display = "none";
+
+document.getElementById("loginBox").style.display = "block";
+
+}
+
+
+function togglePassword(id, button) {
+
+const input = document.getElementById(id);
+
+if (input.type === "password") {
+
+input.type = "text";
+
+button.textContent = "🙈";
+
+} else {
+
+input.type = "password";
+
+button.textContent = "👁️";
+
+}
+
+}
+
+</script>
+
+
+<script src="auth.js"></script>
+
+</body>
+
+</html>
