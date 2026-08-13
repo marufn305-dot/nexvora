@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NEXVORA - Order Status</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f5f7f6;
+    color:#222;
+}
+
+.header{
+    background:#008f4c;
+    color:white;
+    padding:20px;
+    text-align:center;
+}
+
+.header h1{
+    font-size:25px;
+}
+
+.container{
+    max-width:600px;
+    margin:20px auto;
+    padding:15px;
+}
+
+.order-card{
+    background:white;
+    padding:20px;
+    border-radius:14px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.order-card h2{
+    margin-bottom:15px;
+}
+
+.info{
+    margin:9px 0;
+    color:#555;
+}
+
+.info strong{
+    color:#222;
+}
+
+.status{
+    margin-top:15px;
+    padding:12px;
+    border-radius:8px;
+    background:#fff2cc;
+    color:#946500;
+    font-weight:bold;
+    text-align:center;
+}
+
+.delivery{
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid #eee;
+}
+
+.delivery h3{
+    margin-bottom:10px;
+}
+
+.delivery p{
+    color:#666;
+    font-size:14px;
+    line-height:1.5;
+}
+
+.confirm-btn{
+    width:100%;
+    margin-top:15px;
+    padding:14px;
+    border:0;
+    border-radius:8px;
+    background:#008f4c;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.confirm-btn:disabled{
+    background:#aaa;
+}
+
+.message{
+    margin-top:15px;
+    padding:12px;
+    border-radius:8px;
+    background:#f0f8f4;
+    color:#008f4c;
+    display:none;
+}
+
+.warning{
+    margin-top:15px;
+    padding:12px;
+    border-radius:8px;
+    background:#fff8e6;
+    color:#795900;
+    font-size:13px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>NEXVORA</h1>
+
+    <p>Order Status</p>
+
+</div>
+
+
+<div class="container">
+
+    <div class="order-card">
+
+        <h2>Order Details</h2>
+
+
+        <p class="info">
+            Order ID:
+            <strong>#NXV10001</strong>
+        </p>
+
+
+        <p class="info">
+            Product:
+            <strong>Example Product</strong>
+        </p>
+
+
+        <p class="info">
+            Order Amount:
+            <strong>৳1,000</strong>
+        </p>
+
+
+        <p class="info">
+            Payment:
+            <strong>Paid</strong>
+        </p>
+
+
+        <div class="status" id="status">
+
+            🚚 Order is being delivered
+
+        </div>
+
+
+        <div class="delivery">
+
+            <h3>
+                পণ্য হাতে পেয়েছেন?
+            </h3>
+
+
+            <p>
+                পণ্যটি ঠিকভাবে হাতে পাওয়ার পর
+                নিচের বাটনে চাপুন।
+            </p>
+
+
+            <button
+                class="confirm-btn"
+                id="confirmBtn"
+                onclick="confirmDelivery()">
+
+                আমি পণ্য পেয়েছি
+
+            </button>
+
+
+            <div
+                class="message"
+                id="message">
+
+                ✅ Delivery Confirmed!
+                Seller-এর payment settlement process শুরু হবে।
+
+            </div>
+
+
+            <div class="warning">
+
+                ⚠️ পণ্য হাতে পাওয়ার আগে
+                “আমি পণ্য পেয়েছি” চাপবেন না।
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function confirmDelivery(){
+
+    const confirmResult =
+        confirm(
+            "আপনি কি সত্যিই পণ্যটি হাতে পেয়েছেন?"
+        );
+
+
+    if(!confirmResult){
+
+        return;
+
+    }
+
+
+    document.getElementById("status").innerHTML =
+        "✅ Delivery Confirmed";
+
+
+    document.getElementById("status").style.background =
+        "#e8f7ef";
+
+
+    document.getElementById("status").style.color =
+        "#008f4c";
+
+
+    document.getElementById("confirmBtn").disabled =
+        true;
+
+
+    document.getElementById("confirmBtn").innerHTML =
+        "Delivery Confirmed";
+
+
+    document.getElementById("message").style.display =
+        "block";
+
+
+    alert(
+        "Delivery Confirmed!\n\n" +
+        "Seller settlement process শুরু হয়েছে।"
+    );
+
+}
+
+</script>
+
+</body>
+</html>
