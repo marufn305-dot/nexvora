@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NEXVORA - Payment Settings</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  margin:0;
+  background:#f5f7f6;
+}
+
+header{
+  background:#008f4c;
+  color:white;
+  padding:18px;
+}
+
+.logo{
+  font-size:27px;
+  font-weight:bold;
+}
+
+.container{
+  width:92%;
+  max-width:650px;
+  margin:25px auto;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  margin-bottom:18px;
+  border-radius:12px;
+  box-shadow:0 3px 12px rgba(0,0,0,.1);
+}
+
+h2{
+  color:#008f4c;
+  margin-top:0;
+}
+
+.option{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:15px 0;
+  border-bottom:1px solid #eee;
+}
+
+.option:last-child{
+  border-bottom:none;
+}
+
+.option-name{
+  font-weight:bold;
+}
+
+.option-info{
+  color:#777;
+  font-size:13px;
+  margin-top:4px;
+}
+
+/* SWITCH */
+
+.switch{
+  position:relative;
+  width:52px;
+  height:28px;
+}
+
+.switch input{
+  opacity:0;
+  width:0;
+  height:0;
+}
+
+.slider{
+  position:absolute;
+  cursor:pointer;
+  inset:0;
+  background:#ccc;
+  border-radius:30px;
+  transition:.3s;
+}
+
+.slider:before{
+  content:"";
+  position:absolute;
+  height:22px;
+  width:22px;
+  left:3px;
+  top:3px;
+  background:white;
+  border-radius:50%;
+  transition:.3s;
+}
+
+input:checked + .slider{
+  background:#008f4c;
+}
+
+input:checked + .slider:before{
+  transform:translateX(24px);
+}
+
+.save{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:7px;
+  background:#008f4c;
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+}
+
+.back{
+  display:block;
+  text-align:center;
+  color:#008f4c;
+  text-decoration:none;
+  margin-top:15px;
+}
+
+.status{
+  text-align:center;
+  margin-top:12px;
+  color:#008f4c;
+  font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+NEXVORA Settings
+</div>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- PAYMENT MODE -->
+
+<div class="card">
+
+<h2>💳 Payment Mode</h2>
+
+<div class="option">
+
+<div>
+
+<div class="option-name">
+Cash on Delivery
+</div>
+
+<div class="option-info">
+Customer pays when the order is delivered.
+</div>
+
+</div>
+
+<label class="switch">
+
+<input
+type="checkbox"
+id="cod">
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+
+<div class="option">
+
+<div>
+
+<div class="option-name">
+Advance Payment
+</div>
+
+<div class="option-info">
+Customer pays before the order is confirmed.
+</div>
+
+</div>
+
+<label class="switch">
+
+<input
+type="checkbox"
+id="advance">
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+</div>
+
+
+<!-- PAYMENT METHODS -->
+
+<div class="card">
+
+<h2>🏦 Payment Methods</h2>
+
+
+<div class="option">
+
+<div class="option-name">
+bKash
+</div>
+
+<label class="switch">
+
+<input
+type="checkbox"
+id="bkash">
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+
+<div class="option">
+
+<div class="option-name">
+Nagad
+</div>
+
+<label class="switch">
+
+<input
+type="checkbox"
+id="nagad">
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+
+<div class="option">
+
+<div class="option-name">
+Rocket
+</div>
+
+<label class="switch">
+
+<input
+type="checkbox"
+id="rocket">
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+
+<div class="option">
+
+<div class="option-name">
+Upay
+</div>
+
+<label class="switch">
+
+<input
+type="checkbox"
+id="upay">
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+
+<div class="option">
+
+<div class="option-name">
+Bank Card
+</div>
+
+<label class="switch">
+
+<input
+type="checkbox"
+id="bankcard">
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+</div>
+
+
+<button
+class="save"
+onclick="saveSettings()">
+
+💾 Save Settings
+
+</button>
+
+<div
+class="status"
+id="status">
+</div>
+
+
+<a
+class="back"
+href="index.html">
+
+← Back to NEXVORA
+
+</a>
+
+</div>
+
+
+<script>
+
+function saveSettings(){
+
+const settings={
+
+cod:
+document.getElementById("cod").checked,
+
+advance:
+document.getElementById("advance").checked,
+
+bkash:
+document.getElementById("bkash").checked,
+
+nagad:
+document.getElementById("nagad").checked,
+
+rocket:
+document.getElementById("rocket").checked,
+
+upay:
+document.getElementById("upay").checked,
+
+bankcard:
+document.getElementById("bankcard").checked
+
+};
+
+
+localStorage.setItem(
+"nexvoraPaymentSettings",
+JSON.stringify(settings)
+);
+
+
+document.getElementById("status")
+.textContent=
+"Settings saved successfully!";
+
+}
+
+
+/* LOAD SAVED SETTINGS */
+
+function loadSettings(){
+
+const saved=
+JSON.parse(
+localStorage.getItem(
+"nexvoraPaymentSettings"
+)
+);
+
+
+if(!saved){
+return;
+}
+
+
+document.getElementById("cod")
+.checked=saved.cod;
+
+document.getElementById("advance")
+.checked=saved.advance;
+
+document.getElementById("bkash")
+.checked=saved.bkash;
+
+document.getElementById("nagad")
+.checked=saved.nagad;
+
+document.getElementById("rocket")
+.checked=saved.rocket;
+
+document.getElementById("upay")
+.checked=saved.upay;
+
+document.getElementById("bankcard")
+.checked=saved.bankcard;
+
+}
+
+
+loadSettings();
+
+</script>
+
+</body>
+
+</html>
