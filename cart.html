@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NEXVORA - Cart</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f5f7f6;
+color:#222;
+}
+
+header{
+background:#008f4c;
+color:white;
+padding:18px;
+text-align:center;
+}
+
+header h1{
+font-size:26px;
+}
+
+.container{
+width:92%;
+max-width:900px;
+margin:25px auto;
+}
+
+.cart-box{
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.cart-title{
+color:#008f4c;
+margin-bottom:20px;
+}
+
+.cart-item{
+display:flex;
+align-items:center;
+gap:15px;
+padding:15px 0;
+border-bottom:1px solid #eee;
+}
+
+.icon{
+width:70px;
+height:70px;
+background:#eef3f1;
+border-radius:8px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:35px;
+}
+
+.info{
+flex:1;
+}
+
+.info h3{
+margin-bottom:7px;
+}
+
+.price{
+color:#008f4c;
+font-weight:bold;
+margin-bottom:8px;
+}
+
+.quantity{
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+.quantity button{
+width:30px;
+height:30px;
+border:none;
+background:#008f4c;
+color:white;
+border-radius:5px;
+font-size:18px;
+}
+
+.quantity span{
+min-width:25px;
+text-align:center;
+font-weight:bold;
+}
+
+.remove{
+background:#e53935;
+color:white;
+border:none;
+padding:8px 10px;
+border-radius:5px;
+}
+
+.summary{
+margin-top:25px;
+border-top:2px solid #eee;
+padding-top:20px;
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+margin:10px 0;
+}
+
+.total{
+color:#008f4c;
+font-size:21px;
+font-weight:bold;
+}
+
+.checkout{
+width:100%;
+margin-top:15px;
+padding:14px;
+border:none;
+border-radius:7px;
+background:#008f4c;
+color:white;
+font-size:17px;
+font-weight:bold;
+}
+
+.empty{
+text-align:center;
+padding:35px 10px;
+}
+
+.shop{
+display:inline-block;
+margin-top:15px;
+padding:11px 18px;
+background:#008f4c;
+color:white;
+text-decoration:none;
+border-radius:6px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>NEXVORA</h1>
+
+<p>Shopping Cart</p>
+
+</header>
+
+
+<div class="container">
+
+<div class="cart-box">
+
+<h2 class="cart-title">
+🛒 My Cart
+</h2>
+
+<div id="cartList"></div>
+
+<div
+class="summary"
+id="summary">
+
+<div class="row">
+
+<span>Subtotal</span>
+
+<span id="subtotal">৳0</span>
+
+</div>
+
+<div class="row">
+
+<span>Delivery</span>
+
+<span id="delivery">৳0</span>
+
+</div>
+
+<div class="row total">
+
+<span>Total</span>
+
+<span id="total">৳0</span>
+
+</div>
+
+<button
+class="checkout"
+onclick="checkout()">
+
+Proceed to Checkout
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+let cart =
+JSON.parse(
+localStorage.getItem("nexvoraCart")
+) || [];
+
+
+function displayCart(){
+
+const list =
+document.getElementById("cartList");
+
+const summary =
+document.getElementById("summary");
+
+
+if(cart.length === 0){
+
+list.innerHTML = `
+
+<div class="empty">
+
+<h2>🛒 Your Cart is Empty</h2>
+
+<p>Please add a product first.</p>
+
+<a
+href="products.html"
+class="shop">
+
+Continue Shopping
+
+</a>
+
+</div>
+
+`;
+
+summary.style.display="none";
+
+return;
+
+}
+
+
+summary.style.display="block";
+
+
+let html="";
+
+let subtotal=0;
+
+
+cart.forEach(function(item,index){
+
+const price =
+Number(item.price) || 0;
+
+const quantity =
+Number(item.quantity) || 1;
+
+subtotal +=
+price * quantity;
+
+
+html += `
+
+<div class="cart-item">
+
+<div class="icon">
+${item.icon || "📦"}
+</div>
+
+<div class="info">
+
+<h3>
+${item.name || "Product"}
+</h3>
+
+<div class="price">
+৳${price.toLocaleString()}
+</div>
+
+<div class="quantity">
+
+<button
+onclick="decrease(${index})">
+
+−
+
+</button>
+
+<span>
+${quantity}
+</span>
+
+<button
+onclick="increase(${index})">
+
++
+
+</button>
+
+</div>
+
+</div>
+
+<button
+class="remove"
+onclick="removeItem(${index})">
+
+Remove
+
+</button>
+
+</div>
+
+`;
+
+});
+
+
+list.innerHTML=html;
+
+
+const delivery =
+subtotal > 0 ? 60 : 0;
+
+const total =
+subtotal + delivery;
+
+
+document.getElementById("subtotal")
+.textContent =
+"৳"+subtotal.toLocaleString();
+
+document.getElementById("delivery")
+.textContent =
+"৳"+delivery.toLocaleString();
+
+document.getElementById("total")
+.textContent =
+"৳"+total.toLocaleString();
+
+}
+
+
+function increase(index){
+
+cart[index].quantity =
+(Number(cart[index].quantity) || 1) + 1;
+
+save();
+
+}
+
+
+function decrease(index){
+
+let q =
+Number(cart[index].quantity) || 1;
+
+if(q > 1){
+
+cart[index].quantity =
+q - 1;
+
+}
+
+save();
+
+}
+
+
+function removeItem(index){
+
+cart.splice(index,1);
+
+save();
+
+}
+
+
+function save(){
+
+localStorage.setItem(
+"nexvoraCart",
+JSON.stringify(cart)
+);
+
+displayCart();
+
+}
+
+
+function checkout(){
+
+if(cart.length === 0){
+
+alert("Your cart is empty!");
+
+return;
+
+}
+
+window.location.href =
+"checkout.html";
+
+}
+
+
+displayCart();
+
+</script>
+
+</body>
+
+</html>
