@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NEXVORA - Payment Verification</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f5f7f6;
+    color:#222;
+}
+
+.header{
+    background:#008f4c;
+    color:white;
+    padding:20px;
+    text-align:center;
+}
+
+.header h1{
+    font-size:25px;
+}
+
+.container{
+    max-width:700px;
+    margin:20px auto;
+    padding:15px;
+}
+
+.title{
+    margin-bottom:15px;
+}
+
+.payment-card{
+    background:white;
+    padding:20px;
+    border-radius:14px;
+    margin-bottom:18px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.payment-card h3{
+    margin-bottom:12px;
+}
+
+.info{
+    margin:8px 0;
+    color:#555;
+}
+
+.info strong{
+    color:#222;
+}
+
+.payment-status{
+    display:inline-block;
+    margin-top:10px;
+    padding:6px 10px;
+    border-radius:6px;
+    background:#fff2cc;
+    color:#9a6800;
+    font-size:13px;
+}
+
+.screenshot-box{
+    margin-top:15px;
+    padding:15px;
+    border:1px dashed #aaa;
+    border-radius:8px;
+    text-align:center;
+    color:#777;
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+
+.actions button{
+    flex:1;
+    padding:13px;
+    border:0;
+    border-radius:8px;
+    color:white;
+    font-size:15px;
+    font-weight:bold;
+}
+
+.approve{
+    background:#008f4c;
+}
+
+.reject{
+    background:#d93636;
+}
+
+.empty{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    text-align:center;
+    color:#777;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>NEXVORA</h1>
+
+    <p>Admin Payment Verification</p>
+
+</div>
+
+
+<div class="container">
+
+    <h2 class="title">
+        Payment Verification
+    </h2>
+
+
+    <!-- Demo Payment -->
+
+    <div class="payment-card">
+
+        <h3>
+            Customer: Example Customer
+        </h3>
+
+        <p class="info">
+            Order ID:
+            <strong>#NXV10001</strong>
+        </p>
+
+        <p class="info">
+            Payment Amount:
+            <strong>৳1,000</strong>
+        </p>
+
+        <p class="info">
+            Payment Method:
+            <strong>bKash</strong>
+        </p>
+
+        <p class="info">
+            Transaction ID:
+            <strong>TXN123456789</strong>
+        </p>
+
+        <span class="payment-status">
+            Pending Verification
+        </span>
+
+
+        <div class="screenshot-box">
+
+            Payment Screenshot
+
+            <br><br>
+
+            Screenshot এখানে দেখা যাবে
+
+        </div>
+
+
+        <div class="actions">
+
+            <button
+                class="approve"
+                onclick="approvePayment()">
+
+                Approve Payment
+
+            </button>
+
+
+            <button
+                class="reject"
+                onclick="rejectPayment()">
+
+                Reject Payment
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="empty">
+
+        বর্তমানে আর কোনো Payment Verification Request নেই।
+
+    </div>
+
+</div>
+
+
+<script>
+
+function approvePayment(){
+
+    alert(
+        "Payment Approved!\n\n" +
+        "Order Payment Confirmed."
+    );
+
+}
+
+
+function rejectPayment(){
+
+    alert(
+        "Payment Rejected!\n\n" +
+        "Customer-এর Payment Verification সফল হয়নি।"
+    );
+
+}
+
+</script>
+
+</body>
+</html>
