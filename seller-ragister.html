@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NEXVORA Seller Registration</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f5f7f6;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.box{
+    width:100%;
+    max-width:450px;
+    background:white;
+    padding:25px;
+    border-radius:14px;
+    box-shadow:0 3px 15px rgba(0,0,0,.1);
+}
+
+.logo{
+    text-align:center;
+    color:#008f4c;
+    font-size:28px;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#777;
+    margin-bottom:22px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin:13px 0 6px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:15px;
+}
+
+button{
+    width:100%;
+    padding:13px;
+    margin-top:20px;
+    border:none;
+    border-radius:8px;
+    background:#008f4c;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:active{
+    transform:scale(.98);
+}
+
+.login{
+    text-align:center;
+    margin-top:18px;
+}
+
+.login a{
+    color:#008f4c;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+.message{
+    margin-top:15px;
+    padding:12px;
+    border-radius:7px;
+    text-align:center;
+    display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <div class="logo">NEXVORA</div>
+
+    <div class="subtitle">
+        Seller Registration
+    </div>
+
+    <form onsubmit="registerSeller(event)">
+
+        <label>Seller Name</label>
+
+        <input
+            type="text"
+            id="sellerName"
+            placeholder="Enter seller name"
+            required
+        >
+
+        <label>Email</label>
+
+        <input
+            type="email"
+            id="sellerEmail"
+            placeholder="Enter email"
+            required
+        >
+
+        <label>Phone Number</label>
+
+        <input
+            type="tel"
+            id="sellerPhone"
+            placeholder="Enter phone number"
+            required
+        >
+
+        <label>Password</label>
+
+        <input
+            type="password"
+            id="sellerPassword"
+            placeholder="Create password"
+            required
+            minlength="6"
+        >
+
+        <label>Confirm Password</label>
+
+        <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Confirm password"
+            required
+        >
+
+        <button type="submit">
+            Create Seller Account
+        </button>
+
+    </form>
+
+    <div
+        class="message"
+        id="message">
+    </div>
+
+    <div class="login">
+        Already have an account?
+        <a href="seller-loging.html">
+            Seller Login
+        </a>
+    </div>
+
+</div>
+
+<script>
+
+function registerSeller(event){
+
+    event.preventDefault();
+
+    const name =
+        document.getElementById("sellerName")
+        .value.trim();
+
+    const email =
+        document.getElementById("sellerEmail")
+        .value.trim();
+
+    const phone =
+        document.getElementById("sellerPhone")
+        .value.trim();
+
+    const password =
+        document.getElementById("sellerPassword")
+        .value;
+
+    const confirmPassword =
+        document.getElementById("confirmPassword")
+        .value;
+
+    const message =
+        document.getElementById("message");
+
+
+    /* Password check */
+
+    if(password !== confirmPassword){
+
+        message.style.display = "block";
+        message.style.background = "#f8d7da";
+        message.style.color = "#721c24";
+
+        message.textContent =
+            "Passwords do not match.";
+
+        return;
+    }
+
+
+    /* Get existing sellers */
+
+    const sellers =
+        JSON.parse(
+            localStorage.getItem("nexvoraSellers")
+        ) || [];
+
+
+    /* Check duplicate email */
+
+    const existingSeller =
+        sellers.find(
+            seller =>
+            seller.email.toLowerCase()
+            === email.toLowerCase()
+        );
+
+
+    if(existingSeller){
+
+        message.style.display = "block";
+        message.style.background = "#f8d7da";
+        message.style.color = "#721c24";
+
+        message.textContent =
+            "An account with this email already exists.";
+
+        return;
+    }
+
+
+    /* Create seller */
+
+    const seller = {
+
+        id:
+            "SELLER-" +
+            Date.now(),
+
+        name:name,
+
+        email:email,
+
+        phone:phone,
+
+        password:password,
+
+        createdAt:
+            new Date().toLocaleString()
+
+    };
+
+
+    /* Save seller */
+
+    sellers.push(seller);
+
+    localStorage.setItem(
+        "nexvoraSellers",
+        JSON.stringify(sellers)
+    );
+
+
+    /* Success message */
+
+    message.style.display = "block";
+    message.style.background = "#d4edda";
+    message.style.color = "#155724";
+
+    message.textContent =
+        "✅ Seller account created successfully!";
+
+
+    /* Go to Seller Login */
+
+    setTimeout(function(){
+
+        window.location.href =
+            "seller-loging.html";
+
+    },1000);
+
+}
+
+</script>
+
+</body>
+</html>
