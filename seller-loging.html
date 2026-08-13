@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NEXVORA Seller Account</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f5f7f6;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.box{
+    width:100%;
+    max-width:430px;
+    background:white;
+    padding:25px;
+    border-radius:14px;
+    box-shadow:0 3px 15px rgba(0,0,0,.10);
+}
+
+.logo{
+    text-align:center;
+    color:#008f4c;
+    font-size:30px;
+    font-weight:bold;
+}
+
+.subtitle{
+    text-align:center;
+    color:#777;
+    margin:7px 0 22px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin:13px 0 6px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:15px;
+}
+
+button{
+    width:100%;
+    padding:13px;
+    margin-top:18px;
+    border:none;
+    border-radius:8px;
+    background:#008f4c;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+}
+
+button:active{
+    transform:scale(.98);
+}
+
+.link{
+    text-align:center;
+    margin-top:18px;
+}
+
+.link a{
+    color:#008f4c;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+.message{
+    display:none;
+    margin-top:15px;
+    padding:12px;
+    border-radius:7px;
+    text-align:center;
+}
+
+.hidden{
+    display:none;
+}
+
+.back{
+    background:#777;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <div class="logo">
+        NEXVORA
+    </div>
+
+
+    <!-- LOGIN -->
+
+    <div id="loginPage">
+
+        <div class="subtitle">
+            Seller Center Login
+        </div>
+
+        <form onsubmit="loginSeller(event)">
+
+            <label>Email</label>
+
+            <input
+                type="email"
+                id="loginEmail"
+                placeholder="Enter seller email"
+                required
+            >
+
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                id="loginPassword"
+                placeholder="Enter password"
+                required
+            >
+
+
+            <button type="submit">
+                Login
+            </button>
+
+        </form>
+
+
+        <div
+            id="loginMessage"
+            class="message">
+        </div>
+
+
+        <div class="link">
+
+            Don't have a seller account?
+
+            <a
+                href="#"
+                onclick="showRegister(); return false;">
+                Register
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- REGISTER -->
+
+    <div id="registerPage" class="hidden">
+
+        <div class="subtitle">
+            Create Seller Account
+        </div>
+
+
+        <form onsubmit="registerSeller(event)">
+
+            <label>Seller Name</label>
+
+            <input
+                type="text"
+                id="sellerName"
+                placeholder="Enter seller name"
+                required
+            >
+
+
+            <label>Email</label>
+
+            <input
+                type="email"
+                id="sellerEmail"
+                placeholder="Enter email"
+                required
+            >
+
+
+            <label>Phone Number</label>
+
+            <input
+                type="tel"
+                id="sellerPhone"
+                placeholder="Enter phone number"
+                required
+            >
+
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                id="sellerPassword"
+                placeholder="Create password"
+                minlength="6"
+                required
+            >
+
+
+            <label>Confirm Password</label>
+
+            <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Confirm password"
+                required
+            >
+
+
+            <button type="submit">
+                Create Seller Account
+            </button>
+
+        </form>
+
+
+        <div
+            id="registerMessage"
+            class="message">
+        </div>
+
+
+        <button
+            class="back"
+            onclick="showLogin()">
+            ← Back to Login
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+/* SHOW REGISTER */
+
+function showRegister(){
+
+    document.getElementById("loginPage")
+        .classList.add("hidden");
+
+    document.getElementById("registerPage")
+        .classList.remove("hidden");
+
+}
+
+
+/* SHOW LOGIN */
+
+function showLogin(){
+
+    document.getElementById("registerPage")
+        .classList.add("hidden");
+
+    document.getElementById("loginPage")
+        .classList.remove("hidden");
+
+}
+
+
+/* REGISTER */
+
+function registerSeller(event){
+
+    event.preventDefault();
+
+
+    const name =
+        document.getElementById("sellerName")
+        .value.trim();
+
+    const email =
+        document.getElementById("sellerEmail")
+        .value.trim();
+
+    const phone =
+        document.getElementById("sellerPhone")
+        .value.trim();
+
+    const password =
+        document.getElementById("sellerPassword")
+        .value;
+
+    const confirmPassword =
+        document.getElementById("confirmPassword")
+        .value;
+
+
+    const message =
+        document.getElementById("registerMessage");
+
+
+    if(password !== confirmPassword){
+
+        message.style.display="block";
+
+        message.style.background="#f8d7da";
+
+        message.style.color="#721c24";
+
+        message.textContent=
+            "❌ Passwords do not match.";
+
+        return;
+    }
+
+
+    let sellers =
+        JSON.parse(
+            localStorage.getItem("nexvoraSellers")
+        ) || [];
+
+
+    const existing =
+        sellers.find(function(seller){
+
+            return seller.email.toLowerCase()
+                === email.toLowerCase();
+
+        });
+
+
+    if(existing){
+
+        message.style.display="block";
+
+        message.style.background="#f8d7da";
+
+        message.style.color="#721c24";
+
+        message.textContent=
+            "❌ This email is already registered.";
+
+        return;
+    }
+
+
+    const seller={
+
+        id:
+            "SELLER-"+Date.now(),
+
+        name:name,
+
+        email:email,
+
+        phone:phone,
+
+        password:password,
+
+        createdAt:
+            new Date().toLocaleString()
+
+    };
+
+
+    sellers.push(seller);
+
+
+    localStorage.setItem(
+        "nexvoraSellers",
+        JSON.stringify(sellers)
+    );
+
+
+    message.style.display="block";
+
+    message.style.background="#d4edda";
+
+    message.style.color="#155724";
+
+    message.textContent=
+        "✅ Account created successfully!";
+
+
+    setTimeout(function(){
+
+        showLogin();
+
+    },1000);
+
+}
+
+
+/* LOGIN */
+
+function loginSeller(event){
+
+    event.preventDefault();
+
+
+    const email =
+        document.getElementById("loginEmail")
+        .value.trim();
+
+    const password =
+        document.getElementById("loginPassword")
+        .value;
+
+
+    const message =
+        document.getElementById("loginMessage");
+
+
+    const sellers =
+        JSON.parse(
+            localStorage.getItem("nexvoraSellers")
+        ) || [];
+
+
+    const seller =
+        sellers.find(function(item){
+
+            return (
+                item.email.toLowerCase()
+                === email.toLowerCase()
+                &&
+                item.password === password
+            );
+
+        });
+
+
+    if(!seller){
+
+        message.style.display="block";
+
+        message.style.background="#f8d7da";
+
+        message.style.color="#721c24";
+
+        message.textContent=
+            "❌ Invalid email or password.";
+
+        return;
+    }
+
+
+    localStorage.setItem(
+        "nexvoraCurrentSeller",
+        JSON.stringify(seller)
+    );
+
+
+    message.style.display="block";
+
+    message.style.background="#d4edda";
+
+    message.style.color="#155724";
+
+    message.textContent=
+        "✅ Login successful!";
+
+
+    setTimeout(function(){
+
+        window.location.href=
+            "seller-dashboard.html";
+
+    },700);
+
+}
+
+</script>
+
+</body>
+</html>
