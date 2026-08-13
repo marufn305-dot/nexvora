@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NEXVORA - Withdraw</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f7f5;
+      color: #222;
+    }
+
+    .header {
+      background: #0b8f4d;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 25px;
+      margin-bottom: 5px;
+    }
+
+    .header p {
+      font-size: 14px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 25px auto;
+      padding: 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 22px;
+      border-radius: 14px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .balance {
+      background: #e9f8ef;
+      border: 1px solid #b8e5c8;
+      padding: 18px;
+      border-radius: 10px;
+      margin-bottom: 22px;
+      text-align: center;
+    }
+
+    .balance span {
+      display: block;
+      color: #555;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .balance strong {
+      color: #0b8f4d;
+      font-size: 27px;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 7px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+      outline: none;
+      background: white;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #0b8f4d;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 22px;
+      padding: 14px;
+      background: #0b8f4d;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #08763f;
+    }
+
+    .message {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 18px;
+      color: #0b8f4d;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .back:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <h1>NEXVORA</h1>
+    <p>Withdraw Money</p>
+  </div>
+
+  <div class="container">
+
+    <div class="card">
+
+      <div class="balance">
+        <span>Available Balance</span>
+        <strong id="balance">৳0.00</strong>
+      </div>
+
+      <label for="method">Withdrawal Method</label>
+
+      <select id="method">
+        <option value="">Select Method</option>
+        <option value="bkash">bKash</option>
+        <option value="nagad">Nagad</option>
+        <option value="rocket">Rocket</option>
+        <option value="upay">Upay</option>
+        <option value="bank">Bank Account</option>
+      </select>
+
+      <label for="account">Account Number</label>
+
+      <input
+        type="text"
+        id="account"
+        placeholder="Enter account number"
+      >
+
+      <label for="amount">Withdrawal Amount</label>
+
+      <input
+        type="number"
+        id="amount"
+        placeholder="Enter amount"
+        min="1"
+      >
+
+      <button onclick="submitWithdraw()">
+        Request Withdrawal
+      </button>
+
+      <div class="message" id="message"></div>
+
+      <a href="wallet.html" class="back">
+        ← Back to Wallet
+      </a>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    function loadBalance() {
+
+      try {
+
+        const savedData =
+          localStorage.getItem("nexvora_wallet");
+
+        if (savedData) {
+
+          const wallet =
+            JSON.parse(savedData);
+
+          if (wallet.balance !== undefined) {
+
+            document.getElementById("balance")
+              .textContent =
+              "৳" +
+              Number(wallet.balance)
+                .toFixed(2);
+          }
+        }
+
+      } catch (error) {
+
+        console.log(
+          "Wallet data not found."
+        );
+
+      }
+
+    }
+
+
+    function submitWithdraw() {
+
+      const method =
+        document.getElementById("method")
+          .value;
+
+      const account =
+        document.getElementById("account")
+          .value.trim();
+
+      const amount =
+        Number(
+          document.getElementById("amount")
+            .value
+        );
+
+      const message =
+        document.getElementById("message");
+
+
+      if (!method) {
+
+        message.textContent =
+          "Please select a withdrawal method.";
+
+        message.style.color = "red";
+
+        return;
+      }
+
+
+      if (!account) {
+
+        message.textContent =
+          "Please enter your account number.";
+
+        message.style.color = "red";
+
+        return;
+      }
+
+
+      if (!amount || amount <= 0) {
+
+        message.textContent =
+          "Please enter a valid withdrawal amount.";
+
+        message.style.color = "red";
+
+        return;
+      }
+
+
+      message.textContent =
+        "Withdrawal request submitted successfully.";
+
+      message.style.color =
+        "#0b8f4d";
+
+
+      document.getElementById("amount")
+        .value = "";
+
+    }
+
+
+    loadBalance();
+
+  </script>
+
+</body>
+</html>
