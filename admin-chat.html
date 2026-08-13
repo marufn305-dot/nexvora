@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NEXVORA - Admin Chat</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f7f5;
+      color: #222;
+    }
+
+    .header {
+      background: #0b8f4d;
+      color: white;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 23px;
+    }
+
+    .header p {
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 12px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    }
+
+    .title {
+      color: #0b8f4d;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
+
+    .customer-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .customer {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 14px;
+      cursor: pointer;
+      background: white;
+    }
+
+    .customer:hover {
+      border-color: #0b8f4d;
+    }
+
+    .customer strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .customer span {
+      color: #777;
+      font-size: 13px;
+    }
+
+    .chat-box {
+      display: none;
+      margin-top: 20px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .chat-top {
+      background: #0b8f4d;
+      color: white;
+      padding: 13px;
+      font-weight: bold;
+    }
+
+    .messages {
+      height: 350px;
+      overflow-y: auto;
+      padding: 15px;
+      background: #f7f9f8;
+    }
+
+    .message {
+      max-width: 80%;
+      padding: 10px 12px;
+      border-radius: 11px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .customer-message {
+      background: #e4e8e6;
+      margin-right: auto;
+    }
+
+    .admin-message {
+      background: #0b8f4d;
+      color: white;
+      margin-left: auto;
+    }
+
+    .time {
+      display: block;
+      font-size: 10px;
+      opacity: 0.7;
+      margin-top: 4px;
+    }
+
+    .reply-area {
+      display: flex;
+      border-top: 1px solid #ddd;
+      background: white;
+    }
+
+    .reply-area input {
+      flex: 1;
+      border: none;
+      padding: 14px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .reply-area button {
+      border: none;
+      background: #0b8f4d;
+      color: white;
+      padding: 0 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .empty {
+      text-align: center;
+      color: #777;
+      padding: 30px;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 18px;
+      color: #0b8f4d;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+
+      .container {
+        padding: 10px;
+      }
+
+      .messages {
+        height: 300px;
+      }
+
+      .reply-area button {
+        padding: 0 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <h1>NEXVORA</h1>
+    <p>Admin Customer Support</p>
+  </div>
+
+  <div class="container">
+
+    <div class="card">
+
+      <div class="title">
+        Customer Messages
+      </div>
+
+      <div
+        class="customer-list"
+        id="customerList">
+
+        <div class="empty">
+          No customer messages yet.
+        </div>
+
+      </div>
+
+
+      <div
+        class="chat-box"
+        id="chatBox">
+
+        <div
+          class="chat-top"
+          id="chatTitle">
+          Customer Chat
+        </div>
+
+
+        <div
+          class="messages"
+          id="messages">
+        </div>
+
+
+        <div class="reply-area">
+
+          <input
+            type="text"
+            id="replyInput"
+            placeholder="Type your reply..."
+            autocomplete="off">
+
+          <button
+            onclick="sendReply()">
+            Send
+          </button>
+
+        </div>
+
+      </div>
+
+      <a
+        href="wallet.html"
+        class="back">
+        ← Back to Admin Area
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    let currentCustomer = null;
+
+
+    function getChats() {
+
+      try {
+
+        const saved =
+          localStorage.getItem(
+            "nexvora_chats"
+          );
+
+        if (saved) {
+
+          const chats =
+            JSON.parse(saved);
+
+          if (Array.isArray(chats)) {
+            return chats;
+          }
+
+        }
+
+      } catch (error) {
+        console.log("Chat data error.");
+      }
+
+      return [];
+
+    }
+
+
+    function saveChats(chats) {
+
+      localStorage.setItem(
+        "nexvora_chats",
+        JSON.stringify(chats)
+      );
+
+    }
+
+
+    function loadCustomers() {
+
+      const list =
+        document.getElementById(
+          "customerList"
+        );
+
+      const chats =
+        getChats();
+
+
+      if (chats.length === 0) {
+
+        list.innerHTML = `
+          <div class="empty">
+            No customer messages yet.
+          </div>
+        `;
+
+        return;
+      }
+
+
+      list.innerHTML = "";
+
+
+      chats.forEach(function(chat, index) {
+
+        const div =
+          document.createElement("div");
+
+        div.className =
+          "customer";
+
+
+        const lastMessage =
+          chat.messages &&
+          chat.messages.length
+            ? chat.messages[
+                chat.messages.length - 1
+              ].text
+            : "No messages";
+
+
+        div.innerHTML = `
+          <strong>
+            Customer ${index + 1}
+          </strong>
+
+          <span>
+            ${escapeHTML(lastMessage)}
+          </span>
+        `;
+
+
+        div.onclick =
+          function() {
+            openChat(index);
+          };
+
+
+        list.appendChild(div);
+
+      });
+
+    }
+
+
+    function openChat(index) {
+
+      const chats =
+        getChats();
+
+
+      if (!chats[index]) {
+        return;
+      }
+
+
+      currentCustomer =
+        index;
+
+
+      document.getElementById(
+        "chatBox"
+      ).style.display = "block";
+
+
+      document.getElementById(
+        "chatTitle"
+      ).textContent =
+        "Customer " + (index + 1);
+
+
+      renderMessages();
+
+    }
+
+
+    function renderMessages() {
+
+      if (currentCustomer === null) {
+        return;
+      }
+
+
+      const chats =
+        getChats();
+
+
+      const chat =
+        chats[currentCustomer];
+
+
+      if (!chat) {
+        return;
+      }
+
+
+      const box =
+        document.getElementById(
+          "messages"
+        );
+
+
+      box.innerHTML = "";
+
+
+      chat.messages.forEach(
+        function(message) {
+
+          const div =
+            document.createElement("div");
+
+
+          div.className =
+            "message " +
+            (
+              message.sender === "admin"
+                ? "admin-message"
+                : "customer-message"
+            );
+
+
+          div.innerHTML = `
+            ${escapeHTML(message.text)}
+
+            <span class="time">
+              ${escapeHTML(message.time || "")}
+            </span>
+          `;
+
+
+          box.appendChild(div);
+
+        }
+      );
+
+
+      box.scrollTop =
+        box.scrollHeight;
+
+    }
+
+
+    function sendReply() {
+
+      if (currentCustomer === null) {
+        return;
+      }
+
+
+      const input =
+        document.getElementById(
+          "replyInput"
+        );
+
+
+      const text =
+        input.value.trim();
+
+
+      if (!text) {
+        return;
+      }
+
+
+      const chats =
+        getChats();
+
+
+      if (!chats[currentCustomer]) {
+        return;
+      }
+
+
+      chats[currentCustomer]
+        .messages
+        .push({
+
+          sender: "admin",
+
+          text: text,
+
+          time: new Date()
+            .toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit"
+            })
+
+        });
+
+
+      saveChats(chats);
+
+
+      input.value = "";
+
+
+      renderMessages();
+
+    }
+
+
+    function escapeHTML(text) {
+
+      const div =
+        document.createElement("div");
+
+      div.textContent =
+        text;
+
+      return div.innerHTML;
+
+    }
+
+
+    document
+      .getElementById("replyInput")
+      .addEventListener(
+        "keydown",
+        function(event) {
+
+          if (event.key === "Enter") {
+            sendReply();
+          }
+
+        }
+      );
+
+
+    loadCustomers();
+
+  </script>
+
+</body>
+</html>
