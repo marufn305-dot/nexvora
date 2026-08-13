@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NEXVORA - Withdrawal Requests</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f5f7f6;
+    color:#222;
+}
+
+.header{
+    background:#008f4c;
+    color:white;
+    padding:18px;
+    text-align:center;
+}
+
+.header h1{
+    font-size:24px;
+}
+
+.container{
+    max-width:700px;
+    margin:20px auto;
+    padding:15px;
+}
+
+.title{
+    margin-bottom:15px;
+}
+
+.request{
+    background:white;
+    border-radius:12px;
+    padding:18px;
+    margin-bottom:15px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.request h3{
+    margin-bottom:10px;
+}
+
+.info{
+    margin:7px 0;
+    color:#555;
+}
+
+.status{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:6px;
+    background:#fff2cc;
+    color:#a66b00;
+    font-size:13px;
+    margin-top:8px;
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+
+.actions button{
+    flex:1;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    font-weight:bold;
+    color:white;
+}
+
+.approve{
+    background:#008f4c;
+}
+
+.reject{
+    background:#d93636;
+}
+
+.empty{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    text-align:center;
+    color:#777;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>NEXVORA</h1>
+
+    <p>Admin Withdrawal Requests</p>
+
+</div>
+
+
+<div class="container">
+
+    <h2 class="title">
+        Withdrawal Requests
+    </h2>
+
+
+    <!-- Example Request -->
+
+    <div class="request">
+
+        <h3>
+            Seller: Example Seller
+        </h3>
+
+        <p class="info">
+            Amount: <strong>৳1,500</strong>
+        </p>
+
+        <p class="info">
+            Payment Method: <strong>bKash</strong>
+        </p>
+
+        <p class="info">
+            Account: <strong>01XXXXXXXXX</strong>
+        </p>
+
+        <p class="info">
+            Request Date: <strong>13 August 2026</strong>
+        </p>
+
+        <span class="status">
+            Pending Verification
+        </span>
+
+
+        <div class="actions">
+
+            <button
+                class="approve"
+                onclick="approveRequest()">
+                Approve & Pay
+            </button>
+
+            <button
+                class="reject"
+                onclick="rejectRequest()">
+                Reject
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="empty">
+
+        বর্তমানে আর কোনো Withdrawal Request নেই।
+
+    </div>
+
+</div>
+
+
+<script>
+
+function approveRequest(){
+
+    alert(
+        "Withdrawal Request Approved.\n\n" +
+        "Payment করার পর Admin থেকে Paid status দিতে হবে।"
+    );
+
+}
+
+
+function rejectRequest(){
+
+    alert(
+        "Withdrawal Request Rejected."
+    );
+
+}
+
+</script>
+
+</body>
+</html>
