@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NEXVORA - Withdrawal History</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f7f5;
+      color: #222;
+    }
+
+    .header {
+      background: #0b8f4d;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    .header p {
+      font-size: 14px;
+    }
+
+    .container {
+      max-width: 650px;
+      margin: 25px auto;
+      padding: 15px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #0b8f4d;
+      margin-bottom: 18px;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 35px 15px;
+      color: #777;
+    }
+
+    .withdraw-item {
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 12px;
+      background: #fff;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .label {
+      color: #777;
+      font-size: 13px;
+    }
+
+    .value {
+      font-weight: bold;
+      text-align: right;
+    }
+
+    .amount {
+      color: #0b8f4d;
+      font-size: 18px;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #0b8f4d;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .clear-btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #d9534f;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        margin: 15px auto;
+        padding: 10px;
+      }
+
+      .card {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <h1>NEXVORA</h1>
+    <p>Withdrawal History</p>
+  </div>
+
+  <div class="container">
+
+    <div class="card">
+
+      <div class="title">
+        Withdrawal History
+      </div>
+
+      <div id="history"></div>
+
+      <button
+        class="clear-btn"
+        onclick="clearHistory()">
+        Clear History
+      </button>
+
+      <a
+        href="wallet.html"
+        class="back">
+        ← Back to Wallet
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    function loadHistory() {
+
+      const historyBox =
+        document.getElementById("history");
+
+      let history = [];
+
+      try {
+
+        const saved =
+          localStorage.getItem(
+            "nexvora_withdrawals"
+          );
+
+        if (saved) {
+          history = JSON.parse(saved);
+        }
+
+      } catch (error) {
+
+        history = [];
+
+      }
+
+
+      if (
+        !Array.isArray(history) ||
+        history.length === 0
+      ) {
+
+        historyBox.innerHTML = `
+          <div class="empty">
+            No withdrawal history found.
+          </div>
+        `;
+
+        return;
+      }
+
+
+      historyBox.innerHTML = "";
+
+
+      history.forEach(function(item) {
+
+        const div =
+          document.createElement("div");
+
+        div.className =
+          "withdraw-item";
+
+
+        div.innerHTML = `
+
+          <div class="row">
+            <span class="label">
+              Method
+            </span>
+
+            <span class="value">
+              ${item.method || "Unknown"}
+            </span>
+          </div>
+
+
+          <div class="row">
+            <span class="label">
+              Account
+            </span>
+
+            <span class="value">
+              ${item.account || "N/A"}
+            </span>
+          </div>
+
+
+          <div class="row">
+            <span class="label">
+              Amount
+            </span>
+
+            <span class="value amount">
+              ৳${Number(item.amount || 0).toFixed(2)}
+            </span>
+          </div>
+
+
+          <div class="row">
+            <span class="label">
+              Date
+            </span>
+
+            <span class="value">
+              ${item.date || "N/A"}
+            </span>
+          </div>
+
+
+          <div class="row">
+            <span class="label">
+              Status
+            </span>
+
+            <span class="status">
+              ${item.status || "Pending"}
+            </span>
+          </div>
+
+        `;
+
+
+        historyBox.appendChild(div);
+
+      });
+
+    }
+
+
+    function clearHistory() {
+
+      const confirmClear =
+        confirm(
+          "Are you sure you want to clear withdrawal history?"
+        );
+
+      if (!confirmClear) {
+        return;
+      }
+
+
+      localStorage.removeItem(
+        "nexvora_withdrawals"
+      );
+
+
+      loadHistory();
+
+    }
+
+
+    loadHistory();
+
+  </script>
+
+</body>
+</html>
