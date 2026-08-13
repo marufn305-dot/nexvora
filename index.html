@@ -1,39 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#008000">
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>NEXVORA - Online Marketplace</title>
 
-<style>
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#008f4c">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
 
+<style>
 *{
-    box-sizing:border-box;
     margin:0;
     padding:0;
-    font-family:Arial,sans-serif;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
+    font-family:Arial,sans-serif;
     background:#f5f7f6;
     color:#222;
+}
+
+button,
+input,
+textarea,
+select{
+    font-family:inherit;
 }
 
 button{
     cursor:pointer;
 }
 
-/* HEADER */
+a{
+    text-decoration:none;
+}
+
+/* ================= HEADER ================= */
 
 header{
     background:#008f4c;
-    color:white;
+    color:#fff;
     padding:14px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
 }
 
 .top{
@@ -48,16 +68,18 @@ header{
 .logo{
     font-size:27px;
     font-weight:bold;
+    white-space:nowrap;
 }
 
 .search{
-    display:flex;
     flex:1;
-    max-width:550px;
+    max-width:560px;
+    display:flex;
 }
 
 .search input{
     width:100%;
+    min-width:0;
     padding:12px;
     border:0;
     outline:0;
@@ -69,23 +91,28 @@ header{
     border:0;
     padding:12px 17px;
     background:#006b38;
-    color:white;
+    color:#fff;
     border-radius:0 6px 6px 0;
 }
 
 .account{
     display:flex;
     align-items:center;
+    justify-content:center;
     gap:10px;
     flex-wrap:wrap;
 }
 
 .account a,
 .account button{
-    color:white;
+    color:#fff;
     background:none;
     border:0;
-    text-decoration:none;
+    font-size:14px;
+}
+
+#welcomeUser{
+    font-weight:bold;
 }
 
 #cartCount{
@@ -104,26 +131,30 @@ nav{
 }
 
 nav a{
-    color:white;
-    text-decoration:none;
+    color:#fff;
     white-space:nowrap;
+    padding-bottom:3px;
 }
 
-
-/* MAIN */
+/* ================= GENERAL ================= */
 
 .container{
+    width:100%;
     max-width:1200px;
     margin:auto;
 }
 
+.page{
+    display:none;
+    min-height:70vh;
+}
 
-/* HERO */
+/* ================= HERO ================= */
 
 .hero{
     margin:20px;
-    padding:45px 20px;
-    background:white;
+    padding:50px 20px;
+    background:#fff;
     text-align:center;
     border-radius:12px;
     box-shadow:0 2px 8px rgba(0,0,0,.08);
@@ -131,26 +162,26 @@ nav a{
 
 .hero h1{
     color:#008f4c;
-    font-size:32px;
+    font-size:34px;
     margin-bottom:10px;
 }
 
 .hero p{
     color:#666;
-    margin-bottom:20px;
+    margin-bottom:22px;
 }
 
-.hero button{
+.primary-btn{
     border:0;
-    padding:12px 25px;
+    padding:13px 26px;
     background:#008f4c;
-    color:white;
+    color:#fff;
     border-radius:7px;
     font-size:16px;
+    font-weight:bold;
 }
 
-
-/* SECTION */
+/* ================= SECTIONS ================= */
 
 .section{
     padding:10px 20px;
@@ -161,8 +192,7 @@ nav a{
     margin-bottom:15px;
 }
 
-
-/* CATEGORY */
+/* ================= CATEGORIES ================= */
 
 .categories{
     display:grid;
@@ -171,18 +201,24 @@ nav a{
 }
 
 .category{
-    background:white;
+    background:#fff;
     padding:18px 8px;
     text-align:center;
     border-radius:9px;
     box-shadow:0 2px 7px rgba(0,0,0,.08);
     transition:.2s;
     cursor:pointer;
+    user-select:none;
 }
 
 .category:hover{
     background:#eaf8f0;
     transform:translateY(-2px);
+}
+
+.category.active{
+    border:2px solid #008f4c;
+    background:#eaf8f0;
 }
 
 .category span{
@@ -191,13 +227,7 @@ nav a{
     margin-bottom:8px;
 }
 
-.category.active{
-    border:2px solid #008f4c;
-    background:#eaf8f0;
-}
-
-
-/* PRODUCTS */
+/* ================= PRODUCTS ================= */
 
 .products{
     display:grid;
@@ -206,16 +236,18 @@ nav a{
 }
 
 .product{
-    background:white;
+    background:#fff;
     padding:12px;
     border-radius:9px;
     box-shadow:0 2px 7px rgba(0,0,0,.08);
     transition:.2s;
     cursor:pointer;
+    overflow:hidden;
 }
 
 .product:hover{
     transform:translateY(-3px);
+    box-shadow:0 5px 15px rgba(0,0,0,.12);
 }
 
 .product-image{
@@ -242,6 +274,7 @@ nav a{
 .product h3{
     margin-top:10px;
     font-size:16px;
+    line-height:1.4;
 }
 
 .product-category{
@@ -268,7 +301,7 @@ nav a{
     display:inline-block;
     margin-top:7px;
     background:#e53935;
-    color:white;
+    color:#fff;
     padding:4px 7px;
     border-radius:5px;
     font-size:12px;
@@ -283,26 +316,22 @@ nav a{
 }
 
 .no-products{
-    background:white;
-    padding:35px;
+    background:#fff;
+    padding:40px 20px;
     text-align:center;
     border-radius:10px;
     color:#777;
     grid-column:1/-1;
 }
 
+/* ================= DETAILS ================= */
 
-/* DETAILS */
-
-#detailsPage{
-    display:none;
-    padding:20px;
-}
-
-.details-box{
+.details-box,
+.box{
+    width:calc(100% - 40px);
     max-width:900px;
-    margin:auto;
-    background:white;
+    margin:20px auto;
+    background:#fff;
     padding:20px;
     border-radius:12px;
     box-shadow:0 2px 10px rgba(0,0,0,.1);
@@ -355,6 +384,7 @@ nav a{
     margin:15px 0;
     line-height:1.6;
     color:#555;
+    white-space:pre-wrap;
 }
 
 .buy-btn,
@@ -363,7 +393,7 @@ nav a{
     padding:14px;
     border:0;
     border-radius:7px;
-    color:white;
+    color:#fff;
     font-size:17px;
     font-weight:bold;
     margin-top:10px;
@@ -377,24 +407,7 @@ nav a{
     background:#008f4c;
 }
 
-
-/* CART */
-
-#cartPage,
-#checkoutPage,
-#successPage{
-    display:none;
-    padding:20px;
-}
-
-.box{
-    max-width:850px;
-    margin:auto;
-    background:white;
-    padding:20px;
-    border-radius:12px;
-    box-shadow:0 2px 10px rgba(0,0,0,.1);
-}
+/* ================= CART ================= */
 
 .cart-item{
     display:flex;
@@ -407,12 +420,14 @@ nav a{
 .cart-img{
     width:70px;
     height:70px;
+    flex-shrink:0;
     background:#eee;
     border-radius:7px;
     overflow:hidden;
     display:flex;
     align-items:center;
     justify-content:center;
+    font-size:30px;
 }
 
 .cart-img img{
@@ -423,6 +438,12 @@ nav a{
 
 .cart-info{
     flex:1;
+    min-width:0;
+}
+
+.cart-name{
+    font-weight:bold;
+    word-break:break-word;
 }
 
 .cart-price{
@@ -444,13 +465,14 @@ nav a{
     border:0;
     border-radius:5px;
     background:#008f4c;
-    color:white;
+    color:#fff;
+    font-size:18px;
 }
 
 .delete-btn{
     border:0;
     background:#e53935;
-    color:white;
+    color:#fff;
     padding:8px;
     border-radius:5px;
 }
@@ -465,7 +487,7 @@ nav a{
     border-top:2px solid #ddd;
 }
 
-.total span{
+.total span:last-child{
     color:#008f4c;
 }
 
@@ -476,7 +498,7 @@ nav a{
     margin-top:15px;
     border-radius:7px;
     background:#008f4c;
-    color:white;
+    color:#fff;
     font-size:17px;
     font-weight:bold;
 }
@@ -486,8 +508,7 @@ nav a{
     color:#222;
 }
 
-
-/* CHECKOUT */
+/* ================= CHECKOUT ================= */
 
 .form-group{
     margin-bottom:15px;
@@ -507,10 +528,12 @@ nav a{
     border:1px solid #ccc;
     border-radius:7px;
     outline:none;
+    font-size:15px;
 }
 
 .form-group textarea{
     min-height:90px;
+    resize:vertical;
 }
 
 .delivery-info{
@@ -553,8 +576,7 @@ nav a{
     color:#008f4c;
 }
 
-
-/* SUCCESS */
+/* ================= SUCCESS ================= */
 
 .success{
     text-align:center;
@@ -578,25 +600,46 @@ nav a{
     font-weight:bold;
 }
 
-
-/* FOOTER */
+/* ================= FOOTER ================= */
 
 footer{
     margin-top:30px;
     background:#006b38;
-    color:white;
+    color:#fff;
     text-align:center;
     padding:30px 10px;
 }
 
+footer p{
+    margin-top:7px;
+}
 
-/* MOBILE */
+/* ================= MOBILE ================= */
+
+@media(max-width:900px){
+
+    .categories{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .products{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
 
 @media(max-width:700px){
+
+    header{
+        position:relative;
+    }
 
     .top{
         flex-direction:column;
         align-items:stretch;
+    }
+
+    .logo{
+        text-align:center;
     }
 
     .search{
@@ -605,6 +648,10 @@ footer{
 
     .account{
         justify-content:center;
+    }
+
+    nav{
+        justify-content:flex-start;
     }
 
     .categories{
@@ -627,312 +674,235 @@ footer{
         height:300px;
     }
 
+    .details-box,
+    .box{
+        width:calc(100% - 20px);
+        padding:15px;
+    }
+
+    .cart-item{
+        align-items:flex-start;
+    }
+
+    .delete-btn{
+        flex-shrink:0;
+    }
 }
 
+@media(max-width:380px){
+
+    .products{
+        grid-template-columns:1fr;
+    }
+
+    .categories{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
 </style>
-
 </head>
-
 
 <body>
 
-
-<!-- HEADER -->
+<!-- ================= HEADER ================= -->
 
 <header>
 
 <div class="top">
 
-<div class="logo">
-NEXVORA
-</div>
-
+<div class="logo">NEXVORA</div>
 
 <div class="search">
 
 <input
-id="searchInput"
-type="text"
-placeholder="Search products..."
+    id="searchInput"
+    type="search"
+    placeholder="Search products..."
+    autocomplete="off"
 >
 
-<button onclick="searchProducts()">
+<button id="searchButton" type="button">
 Search
 </button>
 
 </div>
 
-
 <div class="account">
 
 <span id="welcomeUser"></span>
 
-<a href="login.html" id="loginLink">
-Login
-</a>
+<a href="login.html" id="loginLink">Login</a>
 
-<a href="register.html" id="registerLink">
-Register
-</a>
+<a href="register.html" id="registerLink">Register</a>
 
 <button
-id="logoutButton"
-onclick="logoutUser()"
-style="display:none;">
-Logout
+    id="logoutButton"
+    type="button"
+    style="display:none;">
+    Logout
 </button>
 
-<button
-onclick="showCart()"
-style="border:0;background:none;color:white;">
-
+<button id="cartButton" type="button">
 🛒 Cart
 <span id="cartCount">0</span>
-
 </button>
 
 </div>
 
 </div>
-
 
 <nav>
 
-<a href="#" onclick="showHome()">
-Home
-</a>
+<a href="#" id="homeLink">Home</a>
 
-<a href="#categories">
-Categories
-</a>
+<a href="#categories">Categories</a>
 
-<a href="#products">
-Products
-</a>
+<a href="#products">Products</a>
 
-<a href="seller.html">
-Become a Seller
-</a>
+<a href="seller.html">Become a Seller</a>
 
 </nav>
 
 </header>
 
+<!-- ================= HOME ================= -->
 
-<!-- HOME -->
-
-<div id="homePage">
+<main id="homePage" class="page">
 
 <div class="container">
 
-
 <section class="hero">
 
-<h1>
-Welcome to NEXVORA
-</h1>
+<h1>Welcome to NEXVORA</h1>
 
-<p>
-Your trusted online marketplace
-</p>
+<p>Your trusted online marketplace</p>
 
-<button onclick="goToProducts()">
+<button class="primary-btn" id="shopNowButton">
 🛍️ Shop Now
 </button>
 
 </section>
 
-
-<!-- CATEGORIES -->
-
 <section class="section" id="categories">
 
-<h2>
-🛍️ Product Categories
-</h2>
-
+<h2>🛍️ Product Categories</h2>
 
 <div class="categories">
 
-
 <div class="category" data-category="Men's Fashion">
-
 <span>👕</span>
 Men's Fashion
-
 </div>
-
 
 <div class="category" data-category="Women's Fashion">
-
 <span>👗</span>
 Women's Fashion
-
 </div>
-
 
 <div class="category" data-category="Electronics">
-
-<span>📱</span>
+<span>💻</span>
 Electronics
-
 </div>
-
 
 <div class="category" data-category="Mobile & Accessories">
-
 <span>📱</span>
 Mobile & Accessories
-
 </div>
-
 
 <div class="category" data-category="Home & Living">
-
 <span>🏠</span>
 Home & Living
-
 </div>
-
 
 <div class="category" data-category="Beauty & Personal Care">
-
 <span>💄</span>
 Beauty & Personal Care
-
 </div>
-
 
 <div class="category" data-category="Sports">
-
 <span>⚽</span>
 Sports
-
 </div>
-
 
 <div class="category" data-category="Kids & Toys">
-
 <span>🧸</span>
 Kids & Toys
-
 </div>
-
 
 <div class="category" data-category="Groceries">
-
 <span>🛒</span>
 Groceries
-
 </div>
-
 
 <div class="category" data-category="Shoes">
-
 <span>👟</span>
 Shoes
-
 </div>
-
 
 <div class="category" data-category="Bags">
-
 <span>👜</span>
 Bags
-
 </div>
-
 
 <div class="category" data-category="Watches">
-
 <span>⌚</span>
 Watches
-
 </div>
-
 
 <div class="category" data-category="Other">
-
 <span>📦</span>
 Other
-
 </div>
-
 
 </div>
 
 </section>
-
-
-<!-- PRODUCTS -->
 
 <section class="section" id="products">
 
-<h2 id="productTitle">
-🔥 Featured Products
-</h2>
+<h2 id="productTitle">🔥 Featured Products</h2>
 
-
-<div
-class="products"
-id="productList">
-</div>
+<div class="products" id="productList"></div>
 
 </section>
 
 </div>
 
-
 <footer>
 
-<h3>
-NEXVORA
-</h3>
+<h3>NEXVORA</h3>
 
-<p>
-Shop Smart. Shop Easy.
-</p>
+<p>Shop Smart. Shop Easy.</p>
 
-<p>
-© 2026 NEXVORA. All Rights Reserved.
-</p>
+<p>© 2026 NEXVORA. All Rights Reserved.</p>
 
 </footer>
 
-</div>
+</main>
 
+<!-- ================= DETAILS ================= -->
 
-<!-- PRODUCT DETAILS -->
-
-<div id="detailsPage">
+<section id="detailsPage" class="page">
 
 <div class="details-box">
 
-<button
-class="back-btn"
-onclick="showHome()">
-
+<button class="back-btn" id="detailsBackButton">
 ← Back to Products
-
 </button>
-
 
 <div id="detailsContent"></div>
 
 </div>
 
-</div>
+</section>
 
+<!-- ================= CART ================= -->
 
-<!-- CART -->
-
-<div id="cartPage">
+<section id="cartPage" class="page">
 
 <div class="box">
 
-<h1>
-🛒 My Cart
-</h1>
+<h1>🛒 My Cart</h1>
 
 <br>
 
@@ -942,37 +912,29 @@ onclick="showHome()">
 
 <span>Total</span>
 
-<span id="cartTotal">
-৳0
-</span>
+<span id="cartTotal">৳0</span>
 
 </div>
 
 <button
-class="action-btn"
-onclick="showCheckout()">
-
-⚡ Proceed to Checkout
-
+    class="action-btn"
+    id="checkoutButton">
+    ⚡ Proceed to Checkout
 </button>
-
 
 <button
-class="action-btn gray-btn"
-onclick="showHome()">
-
-← Continue Shopping
-
+    class="action-btn gray-btn"
+    id="continueShoppingButton">
+    ← Continue Shopping
 </button>
 
 </div>
 
-</div>
+</section>
 
+<!-- ================= CHECKOUT ================= -->
 
-<!-- CHECKOUT -->
-
-<div id="checkoutPage">
+<section id="checkoutPage" class="page">
 
 <div class="box">
 
@@ -982,105 +944,89 @@ onclick="showHome()">
 
 <br>
 
-
 <div class="form-group">
 
-<label>
+<label for="customerName">
 Full Name
 </label>
 
 <input
-id="customerName"
-type="text"
-placeholder="Enter your full name"
+    id="customerName"
+    type="text"
+    placeholder="Enter your full name"
+    autocomplete="name"
 >
 
 </div>
 
-
 <div class="form-group">
 
-<label>
+<label for="customerPhone">
 Phone Number
 </label>
 
 <input
-id="customerPhone"
-type="tel"
-placeholder="Enter phone number"
+    id="customerPhone"
+    type="tel"
+    placeholder="Enter phone number"
+    autocomplete="tel"
 >
 
 </div>
 
-
 <div class="form-group">
 
-<label>
+<label for="customerAddress">
 Delivery Address
 </label>
 
 <textarea
-id="customerAddress"
-placeholder="Enter full delivery address"
+    id="customerAddress"
+    placeholder="Enter full delivery address"
+    autocomplete="street-address"
 ></textarea>
 
 </div>
 
-
-<!-- DELIVERY AREA -->
-
 <div class="form-group">
 
-<label>
+<label for="deliveryArea">
 🚚 Delivery Area
 </label>
 
-<select
-id="deliveryArea"
-onchange="calculateDelivery()"
->
+<select id="deliveryArea">
 
 <option value="">
 Select delivery area
 </option>
 
 <option value="Dhaka">
-🏠 Dhaka City — Delivery Charge ৳60
+🏠 Dhaka City — ৳60
 </option>
 
 <option value="Outside Dhaka">
-🚚 Outside Dhaka — Delivery Charge ৳130
+🚚 Outside Dhaka — ৳130
 </option>
 
 </select>
 
 </div>
 
-
 <div class="delivery-info">
 
-<h3>
-🚚 Delivery Charge Information
-</h3>
+<h3>🚚 Delivery Charge Information</h3>
 
-<p>
-🏠 <strong>ঢাকার ভিতরে:</strong> ৳60
-</p>
+<p>🏠 <strong>ঢাকার ভিতরে:</strong> ৳60</p>
 
-<p>
-🚚 <strong>ঢাকার বাইরে:</strong> ৳130
-</p>
+<p>🚚 <strong>ঢাকার বাইরে:</strong> ৳130</p>
 
-<p>
-আপনার Delivery Area নির্বাচন করলে চার্জ অটোমেটিক যোগ হবে।
-</p>
+<p>Delivery Area নির্বাচন করলে চার্জ অটোমেটিক যোগ হবে।</p>
 
 </div>
 
-
 <div class="form-group">
 
-<label>
+<label for="paymentMethod">
 Payment Method
 </label>
 
@@ -1090,15 +1036,15 @@ Payment Method
 Select payment method
 </option>
 
-<option>
+<option value="Cash on Delivery">
 Cash on Delivery
 </option>
 
-<option>
+<option value="bKash">
 bKash
 </option>
 
-<option>
+<option value="Nagad">
 Nagad
 </option>
 
@@ -1106,291 +1052,386 @@ Nagad
 
 </div>
 
-
 <div class="summary">
 
-<h3>
-🛒 Order Summary
-</h3>
+<h3>🛒 Order Summary</h3>
 
 <br>
 
 <div id="checkoutItems"></div>
 
-
 <div class="summary-row">
 
-<span>
-Subtotal
-</span>
+<span>Subtotal</span>
 
-<span id="checkoutSubtotal">
-৳0
-</span>
+<span id="checkoutSubtotal">৳0</span>
 
 </div>
 
-
 <div class="summary-row">
 
-<span>
-Delivery Area
-</span>
+<span>Delivery Area</span>
 
-<span id="checkoutDeliveryArea">
-Not Selected
-</span>
+<span id="checkoutDeliveryArea">Not Selected</span>
 
 </div>
 
-
 <div class="summary-row">
 
-<span>
-Delivery Charge
-</span>
+<span>Delivery Charge</span>
 
-<span id="checkoutDeliveryCharge">
-৳0
-</span>
+<span id="checkoutDeliveryCharge">৳0</span>
 
 </div>
-
 
 <div class="summary-row summary-total">
 
-<span>
-Total
-</span>
+<span>Total</span>
 
-<span id="checkoutTotal">
-৳0
-</span>
+<span id="checkoutTotal">৳0</span>
 
 </div>
 
 </div>
-
 
 <button
-class="action-btn"
-onclick="placeOrder()">
-
-✅ Place Order
-
+    class="action-btn"
+    id="placeOrderButton">
+    ✅ Place Order
 </button>
 
-
 <button
-class="action-btn gray-btn"
-onclick="showCart()">
-
-← Back to Cart
-
+    class="action-btn gray-btn"
+    id="backToCartButton">
+    ← Back to Cart
 </button>
 
 </div>
 
-</div>
+</section>
 
+<!-- ================= SUCCESS ================= -->
 
-<!-- SUCCESS -->
-
-<div id="successPage">
+<section id="successPage" class="page">
 
 <div class="box success">
 
-<div class="success-icon">
-✅
-</div>
+<div class="success-icon">✅</div>
 
-<h1>
-Order Placed Successfully!
-</h1>
+<h1>Order Placed Successfully!</h1>
 
-<p>
-Thank you for shopping with NEXVORA.
-</p>
-
+<p>Thank you for shopping with NEXVORA.</p>
 
 <div class="order-id">
 
 Order ID:
-<span id="orderId">
-NEX-000000
-</span>
+<span id="orderId">NEX-000000</span>
 
 </div>
 
-
 <button
-class="action-btn"
-onclick="showHome()">
-
-Continue Shopping
-
+    class="action-btn"
+    id="successContinueButton">
+    Continue Shopping
 </button>
 
 </div>
 
-</div>
-
+</section>
 
 <script>
+"use strict";
 
-/* =====================================
-   STORAGE
-===================================== */
+/* =====================================================
+   NEXVORA MAIN SYSTEM
+===================================================== */
+
+(function(){
+
+/* ================= STORAGE ================= */
+
+const STORAGE = {
+    products: "nexvoraProducts",
+    cart: "nexvoraCart",
+    loggedIn: "nexvoraLoggedIn",
+    user: "nexvoraUser",
+    orders: "nexvoraOrders"
+};
+
+
+/* ================= SAFE STORAGE ================= */
+
+function readStorage(key, fallback){
+
+    try{
+
+        const value = localStorage.getItem(key);
+
+        if(!value){
+            return fallback;
+        }
+
+        const parsed = JSON.parse(value);
+
+        return parsed ?? fallback;
+
+    }catch(error){
+
+        console.warn("Storage read error:", key);
+
+        return fallback;
+    }
+}
+
+
+function writeStorage(key, value){
+
+    try{
+
+        localStorage.setItem(
+            key,
+            JSON.stringify(value)
+        );
+
+        return true;
+
+    }catch(error){
+
+        console.warn("Storage write error:", key);
+
+        return false;
+    }
+}
+
+
+/* ================= ELEMENT ================= */
+
+function $(id){
+
+    return document.getElementById(id);
+}
+
+
+/* ================= ESCAPE TEXT ================= */
+
+function escapeHTML(value){
+
+    const div = document.createElement("div");
+
+    div.textContent =
+        value === undefined ||
+        value === null
+        ? ""
+        : String(value);
+
+    return div.innerHTML;
+}
+
+
+/* ================= PRODUCTS ================= */
 
 function getProducts(){
 
-    return JSON.parse(
-        localStorage.getItem(
-            "nexvoraProducts"
-        )
-    ) || [];
+    const products =
+        readStorage(
+            STORAGE.products,
+            []
+        );
 
+    return Array.isArray(products)
+        ? products
+        : [];
 }
 
+
+/* ================= CART ================= */
 
 function getCart(){
 
-    return JSON.parse(
-        localStorage.getItem(
-            "nexvoraCart"
-        )
-    ) || [];
+    const cart =
+        readStorage(
+            STORAGE.cart,
+            []
+        );
 
+    return Array.isArray(cart)
+        ? cart
+        : [];
 }
 
 
-/* =====================================
-   PRICE
-===================================== */
+/* ================= PRICE ================= */
 
-function finalPrice(product){
+function getFinalPrice(product){
+
+    if(!product){
+        return 0;
+    }
+
+    const storedFinal =
+        Number(product.finalPrice);
 
     if(
-        product.finalPrice !== undefined
+        Number.isFinite(storedFinal) &&
+        storedFinal >= 0
     ){
 
-        return Number(
-            product.finalPrice
-        );
-
+        return storedFinal;
     }
 
+    const price =
+        Number(product.price);
 
-    let price =
-        Number(product.price) || 0;
+    const safePrice =
+        Number.isFinite(price) && price >= 0
+        ? price
+        : 0;
 
+    const discount =
+        Number(product.discount);
 
-    let discount =
-        Number(product.discount) || 0;
+    const safeDiscount =
+        Number.isFinite(discount) &&
+        discount > 0
+        ? Math.min(discount,100)
+        : 0;
 
-
-    return price -
-        (
-            price *
-            discount /
-            100
-        );
-
+    return Math.max(
+        0,
+        safePrice -
+        (safePrice * safeDiscount / 100)
+    );
 }
 
 
-/* =====================================
-   IMAGE
-===================================== */
+/* ================= MONEY ================= */
 
-function imageHTML(product){
+function money(value){
 
-    if(!product.image){
+    const number =
+        Number(value);
 
-        return `
-            <div class="emoji-image">
-                📦
-            </div>
-        `;
+    const safe =
+        Number.isFinite(number)
+        ? number
+        : 0;
 
-    }
+    return "৳" + safe.toLocaleString();
+}
 
+
+/* ================= IMAGE ================= */
+
+function getImageHTML(image, alt){
 
     if(
-        String(product.image)
-        .startsWith("data:image")
+        image &&
+        typeof image === "string" &&
+        image.startsWith("data:image/")
     ){
 
         return `
             <img
-                src="${product.image}"
-                alt="${product.name || "Product"}"
+                src="${escapeHTML(image)}"
+                alt="${escapeHTML(alt || "Product")}"
             >
         `;
-
     }
-
 
     return `
         <div class="emoji-image">
             📦
         </div>
     `;
-
 }
 
 
-/* =====================================
-   LOAD PRODUCTS
-===================================== */
+/* ================= PAGE CONTROL ================= */
 
-function loadProducts(
-    category = ""
-){
+function hideAllPages(){
 
-    const products =
-        getProducts();
+    [
+        "homePage",
+        "detailsPage",
+        "cartPage",
+        "checkoutPage",
+        "successPage"
+    ].forEach(function(id){
 
+        const element = $(id);
 
-    const list =
-        document.getElementById(
-            "productList"
-        );
+        if(element){
+            element.style.display = "none";
+        }
 
-
-    const title =
-        document.getElementById(
-            "productTitle"
-        );
+    });
+}
 
 
-    let filtered =
-        products;
+function showHome(){
+
+    hideAllPages();
+
+    $("homePage").style.display = "block";
+
+    clearCategorySelection();
+
+    $("searchInput").value = "";
+
+    loadProducts();
+
+    window.scrollTo(0,0);
+}
 
 
-    if(category){
+/* ================= CATEGORY ================= */
 
-        filtered =
-            products.filter(
-                function(product){
+function clearCategorySelection(){
 
-                    return String(
-                        product.category || ""
-                    )
-                    .toLowerCase()
-                    ===
-                    category.toLowerCase();
+    document
+        .querySelectorAll(".category")
+        .forEach(function(item){
 
-                }
-            );
+            item.classList.remove("active");
 
+        });
+}
+
+
+/* ================= LOAD PRODUCTS ================= */
+
+function loadProducts(category){
+
+    const list = $("productList");
+
+    const title = $("productTitle");
+
+    if(!list || !title){
+        return;
     }
 
+    const products = getProducts();
 
-    list.innerHTML = "";
-
+    let filtered = products;
 
     if(category){
+
+        const wanted =
+            String(category)
+            .trim()
+            .toLowerCase();
+
+        filtered =
+            products.filter(function(product){
+
+                return String(
+                    product.category || ""
+                )
+                .trim()
+                .toLowerCase()
+                === wanted;
+
+            });
 
         title.textContent =
             "🛍️ " + category;
@@ -1399,9 +1440,9 @@ function loadProducts(
 
         title.textContent =
             "🔥 Featured Products";
-
     }
 
+    list.innerHTML = "";
 
     if(filtered.length === 0){
 
@@ -1409,20 +1450,15 @@ function loadProducts(
 
             <div class="no-products">
 
-                <h3>
-                    📦 No Products Found
-                </h3>
+                <h3>📦 No Products Found</h3>
 
                 <br>
 
                 <p>
                     ${
                         category
-                        ?
-                        "No products available in " +
-                        category
-                        :
-                        "Products published by sellers will appear here."
+                        ? "No products available in this category yet."
+                        : "Products published by sellers will appear here."
                     }
                 </p>
 
@@ -1431,287 +1467,193 @@ function loadProducts(
         `;
 
         return;
-
     }
 
+    filtered.forEach(function(product){
 
-    filtered.forEach(
-        function(product){
+        list.appendChild(
+            createProductCard(product)
+        );
 
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-
-            card.className =
-                "product";
-
-
-            const price =
-                finalPrice(product);
-
-
-            const discount =
-                Number(
-                    product.discount
-                ) || 0;
-
-
-            const stock =
-                Number(
-                    product.stock
-                ) || 0;
-
-
-            card.innerHTML = `
-
-                <div class="product-image">
-
-                    ${imageHTML(product)}
-
-                </div>
-
-
-                <h3>
-                    ${product.name || "Product"}
-                </h3>
-
-
-                <div class="product-category">
-
-                    ${product.category || "Other"}
-
-                </div>
-
-
-                ${
-                    discount > 0
-                    ?
-                    `
-                    <div class="discount-badge">
-
-                        ${discount}% OFF
-
-                    </div>
-
-                    <div class="old-price">
-
-                        ৳${Number(
-                            product.price || 0
-                        ).toLocaleString()}
-
-                    </div>
-                    `
-                    :
-                    ""
-                }
-
-
-                <div class="product-price">
-
-                    ৳${price.toLocaleString()}
-
-                </div>
-
-
-                <div class="product-stock">
-
-                    ${
-                        stock > 0
-                        ?
-                        "📦 " + stock + " in stock"
-                        :
-                        "❌ Out of stock"
-                    }
-
-                </div>
-
-            `;
-
-
-            card.onclick =
-                function(){
-
-                    showDetails(
-                        product.id
-                    );
-
-                };
-
-
-            list.appendChild(
-                card
-            );
-
-        }
-    );
-
+    });
 }
 
 
-/* =====================================
-   CATEGORY CLICK
-===================================== */
+/* ================= PRODUCT CARD ================= */
 
-document
-.querySelectorAll(".category")
-.forEach(
-    function(category){
+function createProductCard(product){
 
-        category.onclick =
-            function(){
+    const card =
+        document.createElement("div");
 
-                document
-                .querySelectorAll(
-                    ".category"
-                )
-                .forEach(
-                    function(item){
+    card.className = "product";
 
-                        item.classList.remove(
-                            "active"
-                        );
+    const name =
+        product.name || "Product";
 
-                    }
-                );
-
-
-                this.classList.add(
-                    "active"
-                );
-
-
-                loadProducts(
-                    this.dataset.category
-                );
-
-
-                document
-                .getElementById(
-                    "products"
-                )
-                .scrollIntoView({
-                    behavior:"smooth"
-                });
-
-            };
-
-    }
-);
-
-
-/* =====================================
-   DETAILS
-===================================== */
-
-function showDetails(id){
-
-    const products =
-        getProducts();
-
-
-    const product =
-        products.find(
-            function(item){
-
-                return String(item.id)
-                ===
-                String(id);
-
-            }
-        );
-
-
-    if(!product){
-
-        alert(
-            "Product not found."
-        );
-
-        return;
-
-    }
-
+    const category =
+        product.category || "Other";
 
     const price =
-        finalPrice(product);
+        getFinalPrice(product);
 
+    const originalPrice =
+        Number(product.price) || 0;
 
     const discount =
         Number(product.discount) || 0;
 
+    const stock =
+        Number(product.stock) || 0;
+
+    card.innerHTML = `
+
+        <div class="product-image">
+
+            ${getImageHTML(product.image,name)}
+
+        </div>
+
+        <h3>
+            ${escapeHTML(name)}
+        </h3>
+
+        <div class="product-category">
+            ${escapeHTML(category)}
+        </div>
+
+        ${
+            discount > 0
+            ?
+            `
+            <div class="discount-badge">
+                ${Math.round(discount)}% OFF
+            </div>
+
+            <div class="old-price">
+                ${money(originalPrice)}
+            </div>
+            `
+            :
+            ""
+        }
+
+        <div class="product-price">
+            ${money(price)}
+        </div>
+
+        <div class="product-stock">
+
+            ${
+                stock > 0
+                ? "📦 " + stock + " in stock"
+                : "❌ Out of stock"
+            }
+
+        </div>
+    `;
+
+    card.addEventListener(
+        "click",
+        function(){
+
+            showDetails(product.id);
+
+        }
+    );
+
+    return card;
+}
+
+
+/* ================= DETAILS ================= */
+
+function showDetails(id){
+
+    const product =
+        getProducts().find(function(item){
+
+            return String(item.id)
+                === String(id);
+
+        });
+
+    if(!product){
+
+        alert("Product not found.");
+
+        return;
+    }
+
+    const price =
+        getFinalPrice(product);
+
+    const discount =
+        Number(product.discount) || 0;
 
     const stock =
         Number(product.stock) || 0;
 
+    const originalPrice =
+        Number(product.price) || 0;
 
     const content =
-        document.getElementById(
-            "detailsContent"
-        );
-
+        $("detailsContent");
 
     content.innerHTML = `
 
         <div class="details-content">
 
-
             <div class="details-image">
 
-                ${imageHTML(product)}
+                ${getImageHTML(
+                    product.image,
+                    product.name || "Product"
+                )}
 
             </div>
-
 
             <div class="details-info">
 
                 <h1>
-                    ${product.name}
+                    ${escapeHTML(
+                        product.name || "Product"
+                    )}
                 </h1>
-
 
                 <p>
                     Category:
                     <strong>
-                        ${product.category || "Other"}
+                        ${escapeHTML(
+                            product.category || "Other"
+                        )}
                     </strong>
                 </p>
-
 
                 ${
                     discount > 0
                     ?
                     `
                     <div class="discount-badge">
-                        ${discount}% OFF
+                        ${Math.round(discount)}% OFF
                     </div>
 
                     <div class="old-price">
-                        ৳${Number(
-                            product.price || 0
-                        ).toLocaleString()}
+                        ${money(originalPrice)}
                     </div>
                     `
                     :
                     ""
                 }
 
-
                 <div class="details-price">
-
-                    ৳${price.toLocaleString()}
-
+                    ${money(price)}
                 </div>
-
 
                 <p>
                     📦 Stock:
-                    <strong>
-                        ${stock}
-                    </strong>
+                    <strong>${stock}</strong>
                 </p>
-
 
                 <div class="details-description">
 
@@ -1721,23 +1663,26 @@ function showDetails(id){
 
                     <br><br>
 
-                    ${product.description || "No description available."}
+                    ${
+                        escapeHTML(
+                            product.description ||
+                            "No description available."
+                        )
+                    }
 
                 </div>
 
-
                 <button
                     class="add-btn"
-                    onclick="addToCartById('${product.id}')">
+                    id="detailsAddButton">
 
                     🛒 Add to Cart
 
                 </button>
 
-
                 <button
                     class="buy-btn"
-                    onclick="buyNowById('${product.id}')">
+                    id="detailsBuyButton">
 
                     ⚡ Buy Now
 
@@ -1746,196 +1691,221 @@ function showDetails(id){
             </div>
 
         </div>
-
     `;
 
+    $("detailsAddButton").addEventListener(
+        "click",
+        function(){
 
-    document.getElementById(
-        "homePage"
-    ).style.display="none";
+            addToCartById(product.id);
 
-
-    document.getElementById(
-        "cartPage"
-    ).style.display="none";
-
-
-    document.getElementById(
-        "checkoutPage"
-    ).style.display="none";
-
-
-    document.getElementById(
-        "successPage"
-    ).style.display="none";
-
-
-    document.getElementById(
-        "detailsPage"
-    ).style.display="block";
-
-
-    window.scrollTo(
-        0,
-        0
+        }
     );
 
+    $("detailsBuyButton").addEventListener(
+        "click",
+        function(){
+
+            buyNowById(product.id);
+
+        }
+    );
+
+    hideAllPages();
+
+    $("detailsPage").style.display = "block";
+
+    window.scrollTo(0,0);
 }
 
 
-/* =====================================
-   ADD TO CART
-===================================== */
+/* ================= ADD CART ================= */
 
 function addToCartById(id){
 
-    const products =
-        getProducts();
-
-
     const product =
-        products.find(
-            function(item){
+        getProducts().find(function(item){
 
-                return String(item.id)
-                ===
-                String(id);
+            return String(item.id)
+                === String(id);
 
-            }
-        );
-
+        });
 
     if(!product){
 
-        return;
+        alert("Product not found.");
 
+        return false;
     }
 
+    const stock =
+        Number(product.stock);
 
-    let cart =
-        getCart();
+    if(
+        Number.isFinite(stock) &&
+        stock <= 0
+    ){
 
+        alert("❌ This product is out of stock.");
+
+        return false;
+    }
+
+    let cart = getCart();
 
     const existing =
-        cart.find(
-            function(item){
+        cart.find(function(item){
 
-                return String(item.id)
-                ===
-                String(id);
+            return String(item.id)
+                === String(id);
 
-            }
-        );
-
+        });
 
     if(existing){
 
         existing.quantity =
-            Number(
-                existing.quantity
+            Math.max(
+                1,
+                Number(existing.quantity) || 1
             ) + 1;
 
     }else{
 
         cart.push({
 
-            id:
-                product.id,
+            id: product.id,
 
-            name:
-                product.name,
+            name: product.name || "Product",
 
-            price:
-                finalPrice(product),
+            price: getFinalPrice(product),
 
-            image:
-                product.image,
+            image: product.image || "",
 
-            quantity:
-                1
+            quantity: 1
+
+        });
+    }
+
+    writeStorage(
+        STORAGE.cart,
+        cart
+    );
+
+    updateCart();
+
+    alert("✅ Product added to cart!");
+
+    return true;
+}
+
+
+/* ================= BUY NOW ================= */
+
+function buyNowById(id){
+
+    const product =
+        getProducts().find(function(item){
+
+            return String(item.id)
+                === String(id);
+
+        });
+
+    if(!product){
+        return;
+    }
+
+    let cart = getCart();
+
+    const existing =
+        cart.find(function(item){
+
+            return String(item.id)
+                === String(id);
+
+        });
+
+    if(!existing){
+
+        cart.push({
+
+            id: product.id,
+
+            name: product.name || "Product",
+
+            price: getFinalPrice(product),
+
+            image: product.image || "",
+
+            quantity: 1
 
         });
 
     }
 
-
-    localStorage.setItem(
-        "nexvoraCart",
-        JSON.stringify(cart)
+    writeStorage(
+        STORAGE.cart,
+        cart
     );
-
 
     updateCart();
 
-
-    alert(
-        "✅ Product added to cart!"
-    );
-
-}
-
-
-/* =====================================
-   BUY NOW
-===================================== */
-
-function buyNowById(id){
-
-    addToCartById(id);
-
     showCheckout();
-
 }
 
 
-/* =====================================
-   CART
-===================================== */
+/* ================= CART COUNT ================= */
+
+function updateCart(){
+
+    const cart = getCart();
+
+    let count = 0;
+
+    cart.forEach(function(item){
+
+        const quantity =
+            Number(item.quantity);
+
+        if(
+            Number.isFinite(quantity) &&
+            quantity > 0
+        ){
+
+            count += quantity;
+        }
+
+    });
+
+    $("cartCount").textContent = count;
+}
+
+
+/* ================= SHOW CART ================= */
 
 function showCart(){
 
-    hidePages();
+    hideAllPages();
 
-
-    document.getElementById(
-        "cartPage"
-    ).style.display="block";
-
+    $("cartPage").style.display = "block";
 
     renderCart();
 
-
-    window.scrollTo(
-        0,
-        0
-    );
-
+    window.scrollTo(0,0);
 }
 
 
+/* ================= RENDER CART ================= */
+
 function renderCart(){
 
-    const cart =
-        getCart();
+    const cart = getCart();
 
-
-    const box =
-        document.getElementById(
-            "cartItems"
-        );
-
-
-    const totalBox =
-        document.getElementById(
-            "cartTotal"
-        );
-
-
-    box.innerHTML = "";
-
+    const box = $("cartItems");
 
     let total = 0;
 
+    box.innerHTML = "";
 
     if(cart.length === 0){
 
@@ -1943,748 +1913,557 @@ function renderCart(){
 
             <div class="no-products">
 
-                🛒 Your Cart is Empty
+                <h3>🛒 Your Cart is Empty</h3>
+
+                <br>
+
+                <p>
+                    Add products to your cart to continue.
+                </p>
 
             </div>
-
         `;
 
-
-        totalBox.textContent =
-            "৳0";
-
+        $("cartTotal").textContent = "৳0";
 
         updateCart();
 
         return;
-
     }
 
+    cart.forEach(function(item,index){
 
-    cart.forEach(
-        function(item,index){
-
-            const itemTotal =
-                Number(item.price)
-                *
-                Number(item.quantity);
-
-
-            total +=
-                itemTotal;
-
-
-            const div =
-                document.createElement(
-                    "div"
-                );
-
-
-            div.className =
-                "cart-item";
-
-
-            div.innerHTML = `
-
-                <div class="cart-img">
-
-                    ${
-                        item.image
-                        &&
-                        String(item.image)
-                        .startsWith("data:image")
-                        ?
-                        `
-                        <img
-                            src="${item.image}"
-                            alt="${item.name}"
-                        >
-                        `
-                        :
-                        "📦"
-                    }
-
-                </div>
-
-
-                <div class="cart-info">
-
-                    <strong>
-                        ${item.name}
-                    </strong>
-
-
-                    <div class="cart-price">
-
-                        ৳${Number(
-                            item.price
-                        ).toLocaleString()}
-
-                    </div>
-
-
-                    <div class="quantity">
-
-                        <button
-                            onclick="changeQty(${index},-1)">
-
-                            −
-
-                        </button>
-
-
-                        <span>
-                            ${item.quantity}
-                        </span>
-
-
-                        <button
-                            onclick="changeQty(${index},1)">
-
-                            +
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <button
-                    class="delete-btn"
-                    onclick="removeCart(${index})">
-
-                    🗑️
-
-                </button>
-
-            `;
-
-
-            box.appendChild(
-                div
+        const quantity =
+            Math.max(
+                1,
+                Number(item.quantity) || 1
             );
 
-        }
-    );
+        const price =
+            Number(item.price) || 0;
 
+        const amount =
+            price * quantity;
 
-    totalBox.textContent =
-        "৳"
-        +
-        total.toLocaleString();
+        total += amount;
 
+        const div =
+            document.createElement("div");
+
+        div.className = "cart-item";
+
+        div.innerHTML = `
+
+            <div class="cart-img">
+
+                ${getImageHTML(
+                    item.image,
+                    item.name || "Product"
+                )}
+
+            </div>
+
+            <div class="cart-info">
+
+                <div class="cart-name">
+                    ${escapeHTML(
+                        item.name || "Product"
+                    )}
+                </div>
+
+                <div class="cart-price">
+                    ${money(price)}
+                </div>
+
+                <div class="quantity">
+
+                    <button
+                        type="button"
+                        class="minus-btn">
+                        −
+                    </button>
+
+                    <span>${quantity}</span>
+
+                    <button
+                        type="button"
+                        class="plus-btn">
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+            <button
+                type="button"
+                class="delete-btn">
+                🗑️
+            </button>
+        `;
+
+        div.querySelector(".minus-btn")
+            .addEventListener(
+                "click",
+                function(){
+
+                    changeQty(index,-1);
+
+                }
+            );
+
+        div.querySelector(".plus-btn")
+            .addEventListener(
+                "click",
+                function(){
+
+                    changeQty(index,1);
+
+                }
+            );
+
+        div.querySelector(".delete-btn")
+            .addEventListener(
+                "click",
+                function(){
+
+                    removeCart(index);
+
+                }
+            );
+
+        box.appendChild(div);
+    });
+
+    $("cartTotal").textContent =
+        money(total);
 
     updateCart();
-
 }
 
 
-function changeQty(
-    index,
-    change
-){
+/* ================= QUANTITY ================= */
 
-    let cart =
-        getCart();
+function changeQty(index,change){
 
+    const cart = getCart();
 
     if(!cart[index]){
-
         return;
-
     }
 
+    const current =
+        Number(cart[index].quantity) || 1;
 
-    cart[index].quantity =
-        Number(
-            cart[index].quantity
-        )
-        +
-        change;
+    const newQuantity =
+        current + change;
 
+    if(newQuantity <= 0){
 
-    if(
-        cart[index].quantity <= 0
-    ){
+        cart.splice(index,1);
 
-        cart.splice(
-            index,
-            1
-        );
+    }else{
 
+        cart[index].quantity =
+            newQuantity;
     }
 
-
-    localStorage.setItem(
-        "nexvoraCart",
-        JSON.stringify(cart)
+    writeStorage(
+        STORAGE.cart,
+        cart
     );
 
-
     renderCart();
-
 }
 
+
+/* ================= REMOVE ================= */
 
 function removeCart(index){
 
-    let cart =
-        getCart();
+    const cart = getCart();
 
+    if(!cart[index]){
+        return;
+    }
 
-    cart.splice(
-        index,
-        1
+    cart.splice(index,1);
+
+    writeStorage(
+        STORAGE.cart,
+        cart
     );
-
-
-    localStorage.setItem(
-        "nexvoraCart",
-        JSON.stringify(cart)
-    );
-
 
     renderCart();
-
 }
 
 
-function updateCart(){
-
-    const cart =
-        getCart();
-
-
-    let count = 0;
-
-
-    cart.forEach(
-        function(item){
-
-            count +=
-                Number(
-                    item.quantity
-                );
-
-        }
-    );
-
-
-    document.getElementById(
-        "cartCount"
-    ).textContent =
-        count;
-
-}
-
-
-/* =====================================
-   DELIVERY CHARGE
-===================================== */
+/* ================= DELIVERY ================= */
 
 function getDeliveryCharge(){
 
     const area =
-        document.getElementById(
-            "deliveryArea"
-        ).value;
-
+        $("deliveryArea").value;
 
     if(area === "Dhaka"){
-
         return 60;
-
     }
-
 
     if(area === "Outside Dhaka"){
-
         return 130;
-
     }
 
-
     return 0;
-
 }
 
 
-/* =====================================
-   CALCULATE DELIVERY
-===================================== */
+/* ================= CHECKOUT ================= */
+
+function showCheckout(){
+
+    const cart = getCart();
+
+    if(cart.length === 0){
+
+        alert("Your cart is empty.");
+
+        return;
+    }
+
+    hideAllPages();
+
+    $("checkoutPage").style.display = "block";
+
+    renderCheckout();
+
+    window.scrollTo(0,0);
+}
+
+
+/* ================= RENDER CHECKOUT ================= */
+
+function renderCheckout(){
+
+    const cart = getCart();
+
+    const list = $("checkoutItems");
+
+    let subtotal = 0;
+
+    list.innerHTML = "";
+
+    cart.forEach(function(item){
+
+        const quantity =
+            Number(item.quantity) || 1;
+
+        const price =
+            Number(item.price) || 0;
+
+        const amount =
+            price * quantity;
+
+        subtotal += amount;
+
+        const row =
+            document.createElement("div");
+
+        row.className = "summary-row";
+
+        row.innerHTML = `
+
+            <span>
+                ${escapeHTML(
+                    item.name || "Product"
+                )}
+                ×${quantity}
+            </span>
+
+            <span>
+                ${money(amount)}
+            </span>
+        `;
+
+        list.appendChild(row);
+    });
+
+    $("checkoutSubtotal").textContent =
+        money(subtotal);
+
+    calculateDelivery();
+}
+
+
+/* ================= CALCULATE DELIVERY ================= */
 
 function calculateDelivery(){
 
-    const area =
-        document.getElementById(
-            "deliveryArea"
-        ).value;
+    const cart = getCart();
 
+    let subtotal = 0;
+
+    cart.forEach(function(item){
+
+        subtotal +=
+            (Number(item.price) || 0) *
+            (Number(item.quantity) || 1);
+
+    });
+
+    const area =
+        $("deliveryArea").value;
 
     const charge =
         getDeliveryCharge();
 
-
-    const cart =
-        getCart();
-
-
-    let subtotal = 0;
-
-
-    cart.forEach(
-        function(item){
-
-            subtotal +=
-                Number(item.price)
-                *
-                Number(item.quantity);
-
-        }
-    );
-
-
     let areaText =
         "Not Selected";
 
-
     if(area === "Dhaka"){
-
-        areaText =
-            "Dhaka";
-
+        areaText = "Dhaka";
     }
-
 
     if(area === "Outside Dhaka"){
-
-        areaText =
-            "Outside Dhaka";
-
+        areaText = "Outside Dhaka";
     }
 
+    $("checkoutDeliveryArea")
+        .textContent = areaText;
 
-    document.getElementById(
-        "checkoutDeliveryArea"
-    ).textContent =
-        areaText;
+    $("checkoutDeliveryCharge")
+        .textContent = money(charge);
 
-
-    document.getElementById(
-        "checkoutDeliveryCharge"
-    ).textContent =
-        "৳"
-        +
-        charge.toLocaleString();
-
-
-    document.getElementById(
-        "checkoutTotal"
-    ).textContent =
-        "৳"
-        +
-        (
-            subtotal + charge
-        ).toLocaleString();
-
+    $("checkoutTotal")
+        .textContent =
+        money(subtotal + charge);
 }
 
 
-/* =====================================
-   CHECKOUT
-===================================== */
-
-function showCheckout(){
-
-    const cart =
-        getCart();
-
-
-    if(cart.length === 0){
-
-        alert(
-            "Your cart is empty."
-        );
-
-        return;
-
-    }
-
-
-    hidePages();
-
-
-    document.getElementById(
-        "checkoutPage"
-    ).style.display="block";
-
-
-    renderCheckout();
-
-
-    window.scrollTo(
-        0,
-        0
-    );
-
-}
-
-
-function renderCheckout(){
-
-    const cart =
-        getCart();
-
-
-    const list =
-        document.getElementById(
-            "checkoutItems"
-        );
-
-
-    let subtotal = 0;
-
-
-    list.innerHTML = "";
-
-
-    cart.forEach(
-        function(item){
-
-            const amount =
-                Number(item.price)
-                *
-                Number(item.quantity);
-
-
-            subtotal +=
-                amount;
-
-
-            list.innerHTML += `
-
-                <div class="summary-row">
-
-                    <span>
-                        ${item.name}
-                        ×${item.quantity}
-                    </span>
-
-                    <span>
-                        ৳${amount.toLocaleString()}
-                    </span>
-
-                </div>
-
-            `;
-
-        }
-    );
-
-
-    document.getElementById(
-        "checkoutSubtotal"
-    ).textContent =
-        "৳"
-        +
-        subtotal.toLocaleString();
-
-
-    calculateDelivery();
-
-}
-
-
-/* =====================================
-   PLACE ORDER
-===================================== */
+/* ================= PLACE ORDER ================= */
 
 function placeOrder(){
 
     const name =
-        document.getElementById(
-            "customerName"
-        ).value.trim();
-
+        $("customerName")
+        .value
+        .trim();
 
     const phone =
-        document.getElementById(
-            "customerPhone"
-        ).value.trim();
-
+        $("customerPhone")
+        .value
+        .trim();
 
     const address =
-        document.getElementById(
-            "customerAddress"
-        ).value.trim();
-
+        $("customerAddress")
+        .value
+        .trim();
 
     const deliveryArea =
-        document.getElementById(
-            "deliveryArea"
-        ).value;
-
+        $("deliveryArea")
+        .value;
 
     const payment =
-        document.getElementById(
-            "paymentMethod"
-        ).value;
-
+        $("paymentMethod")
+        .value;
 
     if(!name){
 
-        alert(
-            "Please enter your name."
-        );
+        alert("Please enter your name.");
+
+        $("customerName").focus();
 
         return;
-
     }
-
 
     if(!phone){
 
-        alert(
-            "Please enter your phone number."
-        );
+        alert("Please enter your phone number.");
+
+        $("customerPhone").focus();
 
         return;
-
     }
-
 
     if(!address){
 
-        alert(
-            "Please enter your address."
-        );
+        alert("Please enter your delivery address.");
+
+        $("customerAddress").focus();
 
         return;
-
     }
-
 
     if(!deliveryArea){
 
-        alert(
-            "Please select your delivery area."
-        );
+        alert("Please select your delivery area.");
+
+        $("deliveryArea").focus();
 
         return;
-
     }
-
 
     if(!payment){
 
-        alert(
-            "Please select payment method."
-        );
+        alert("Please select payment method.");
+
+        $("paymentMethod").focus();
 
         return;
-
     }
 
+    const cart = getCart();
 
-    const cart =
-        getCart();
+    if(cart.length === 0){
 
+        alert("Your cart is empty.");
+
+        showCart();
+
+        return;
+    }
 
     let subtotal = 0;
 
+    cart.forEach(function(item){
 
-    cart.forEach(
-        function(item){
+        subtotal +=
+            (Number(item.price) || 0) *
+            (Number(item.quantity) || 1);
 
-            subtotal +=
-                Number(item.price)
-                *
-                Number(item.quantity);
-
-        }
-    );
-
+    });
 
     const deliveryCharge =
         getDeliveryCharge();
 
-
     const total =
-        subtotal +
-        deliveryCharge;
-
+        subtotal + deliveryCharge;
 
     const orderId =
-        "NEX-"
-        +
+        "NEX-" +
         Date.now()
         .toString()
-        .slice(-6);
-
+        .slice(-8);
 
     const order = {
 
-        id:
-            orderId,
+        id: orderId,
 
-        name:
-            name,
+        name: name,
 
-        phone:
-            phone,
+        phone: phone,
 
-        address:
-            address,
+        address: address,
 
-        deliveryArea:
-            deliveryArea,
+        deliveryArea: deliveryArea,
 
-        deliveryCharge:
-            deliveryCharge,
+        deliveryCharge: deliveryCharge,
 
-        subtotal:
-            subtotal,
+        subtotal: subtotal,
 
-        total:
-            total,
+        total: total,
 
-        payment:
-            payment,
+        payment: payment,
 
-        items:
-            getCart(),
+        items: cart,
 
-        date:
-            new Date()
-            .toLocaleString()
+        date: new Date().toLocaleString()
 
     };
 
-
     let orders =
-        JSON.parse(
-            localStorage.getItem(
-                "nexvoraOrders"
-            )
-        )
-        || [];
+        readStorage(
+            STORAGE.orders,
+            []
+        );
 
+    if(!Array.isArray(orders)){
+        orders = [];
+    }
 
-    orders.push(
-        order
+    orders.push(order);
+
+    writeStorage(
+        STORAGE.orders,
+        orders
     );
-
-
-    localStorage.setItem(
-        "nexvoraOrders",
-        JSON.stringify(
-            orders
-        )
-    );
-
 
     localStorage.removeItem(
-        "nexvoraCart"
+        STORAGE.cart
     );
 
-
-    document.getElementById(
-        "orderId"
-    ).textContent =
+    $("orderId").textContent =
         orderId;
 
+    hideAllPages();
 
-    hidePages();
-
-
-    document.getElementById(
-        "successPage"
-    ).style.display="block";
-
+    $("successPage").style.display =
+        "block";
 
     updateCart();
 
-
-    window.scrollTo(
-        0,
-        0
-    );
-
+    window.scrollTo(0,0);
 }
 
 
-/* =====================================
-   SEARCH
-===================================== */
+/* ================= SEARCH ================= */
 
 function searchProducts(){
 
     const text =
-        document.getElementById(
-            "searchInput"
-        ).value
+        $("searchInput")
+        .value
         .trim()
         .toLowerCase();
-
 
     const products =
         getProducts();
 
-
-    const result =
-        products.filter(
-            function(product){
-
-                return (
-
-                    String(
-                        product.name || ""
-                    )
-                    .toLowerCase()
-                    .includes(text)
-
-                    ||
-
-                    String(
-                        product.category || ""
-                    )
-                    .toLowerCase()
-                    .includes(text)
-
-                );
-
-            }
-        );
-
-
-    document
-    .querySelectorAll(".category")
-    .forEach(
-        function(item){
-
-            item.classList.remove(
-                "active"
-            );
-
-        }
-    );
-
+    clearCategorySelection();
 
     const list =
-        document.getElementById(
-            "productList"
-        );
+        $("productList");
 
-
-    document.getElementById(
-        "productTitle"
-    ).textContent =
+    $("productTitle").textContent =
         "🔍 Search Results";
-
 
     list.innerHTML = "";
 
+    if(!text){
+
+        loadProducts();
+
+        $("products")
+            .scrollIntoView({
+                behavior:"smooth"
+            });
+
+        return;
+    }
+
+    const result =
+        products.filter(function(product){
+
+            const name =
+                String(
+                    product.name || ""
+                ).toLowerCase();
+
+            const category =
+                String(
+                    product.category || ""
+                ).toLowerCase();
+
+            const description =
+                String(
+                    product.description || ""
+                ).toLowerCase();
+
+            return (
+                name.includes(text) ||
+                category.includes(text) ||
+                description.includes(text)
+            );
+        });
 
     if(result.length === 0){
 
@@ -2692,244 +2471,259 @@ function searchProducts(){
 
             <div class="no-products">
 
-                <h3>
-                    🔍 Product Not Found
-                </h3>
+                <h3>🔍 Product Not Found</h3>
 
                 <br>
 
                 <p>
-                    Try another product name.
+                    Try another product name or category.
                 </p>
 
             </div>
-
         `;
 
-        return;
+    }else{
 
-    }
-
-
-    result.forEach(
-        function(product){
-
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-
-            card.className =
-                "product";
-
-
-            const price =
-                finalPrice(product);
-
-
-            card.innerHTML = `
-
-                <div class="product-image">
-
-                    ${imageHTML(product)}
-
-                </div>
-
-
-                <h3>
-                    ${product.name}
-                </h3>
-
-
-                <div class="product-category">
-
-                    ${product.category || "Other"}
-
-                </div>
-
-
-                <div class="product-price">
-
-                    ৳${price.toLocaleString()}
-
-                </div>
-
-            `;
-
-
-            card.onclick =
-                function(){
-
-                    showDetails(
-                        product.id
-                    );
-
-                };
-
+        result.forEach(function(product){
 
             list.appendChild(
-                card
+                createProductCard(product)
             );
 
-        }
-    );
+        });
+    }
 
-
-    document.getElementById(
-        "products"
-    ).scrollIntoView({
-        behavior:"smooth"
-    });
-
+    $("products")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
 }
 
 
-/* =====================================
-   PAGES
-===================================== */
-
-function hidePages(){
-
-    document.getElementById(
-        "homePage"
-    ).style.display="none";
-
-
-    document.getElementById(
-        "detailsPage"
-    ).style.display="none";
-
-
-    document.getElementById(
-        "cartPage"
-    ).style.display="none";
-
-
-    document.getElementById(
-        "checkoutPage"
-    ).style.display="none";
-
-
-    document.getElementById(
-        "successPage"
-    ).style.display="none";
-
-}
-
-
-function showHome(){
-
-    hidePages();
-
-
-    document.getElementById(
-        "homePage"
-    ).style.display="block";
-
-
-    loadProducts();
-
-
-    window.scrollTo(
-        0,
-        0
-    );
-
-}
-
-
-function goToProducts(){
-
-    document.getElementById(
-        "products"
-    ).scrollIntoView({
-        behavior:"smooth"
-    });
-
-}
-
-
-/* =====================================
-   LOGIN
-===================================== */
+/* ================= LOGIN ================= */
 
 function checkLogin(){
 
     const loggedIn =
         localStorage.getItem(
-            "nexvoraLoggedIn"
+            STORAGE.loggedIn
         );
-
 
     const user =
-        JSON.parse(
-            localStorage.getItem(
-                "nexvoraUser"
-            )
+        readStorage(
+            STORAGE.user,
+            null
         );
-
 
     const welcome =
-        document.getElementById(
-            "welcomeUser"
-        );
-
+        $("welcomeUser");
 
     if(
-        loggedIn === "true"
-        &&
-        user
+        loggedIn === "true" &&
+        user &&
+        typeof user === "object"
     ){
 
+        const userName =
+            user.name ||
+            user.username ||
+            "User";
+
         welcome.textContent =
-            "Hi, " + user.name;
+            "Hi, " + userName;
 
+        $("loginLink").style.display =
+            "none";
 
-        document.getElementById(
-            "loginLink"
-        ).style.display="none";
+        $("registerLink").style.display =
+            "none";
 
+        $("logoutButton").style.display =
+            "inline-block";
 
-        document.getElementById(
-            "registerLink"
-        ).style.display="none";
+    }else{
 
+        welcome.textContent = "";
 
-        document.getElementById(
-            "logoutButton"
-        ).style.display="inline";
+        $("loginLink").style.display =
+            "inline-block";
 
+        $("registerLink").style.display =
+            "inline-block";
+
+        $("logoutButton").style.display =
+            "none";
     }
-
 }
 
+
+/* ================= LOGOUT ================= */
 
 function logoutUser(){
 
     localStorage.removeItem(
-        "nexvoraLoggedIn"
+        STORAGE.loggedIn
     );
-
 
     localStorage.removeItem(
-        "nexvoraUser"
+        STORAGE.user
     );
 
+    alert("You have been logged out.");
 
-    alert(
-        "You have been logged out."
-    );
+    checkLogin();
 
-
-    location.reload();
-
+    showHome();
 }
 
 
-/* =====================================
-   START
-===================================== */
+/* ================= CATEGORY EVENTS ================= */
+
+document
+    .querySelectorAll(".category")
+    .forEach(function(category){
+
+        category.addEventListener(
+            "click",
+            function(){
+
+                document
+                    .querySelectorAll(".category")
+                    .forEach(function(item){
+
+                        item.classList.remove("active");
+
+                    });
+
+                this.classList.add("active");
+
+                loadProducts(
+                    this.dataset.category
+                );
+
+                $("products")
+                    .scrollIntoView({
+                        behavior:"smooth"
+                    });
+            }
+        );
+    });
+
+
+/* ================= BUTTON EVENTS ================= */
+
+$("searchButton")
+    .addEventListener(
+        "click",
+        searchProducts
+    );
+
+
+$("searchInput")
+    .addEventListener(
+        "keydown",
+        function(event){
+
+            if(event.key === "Enter"){
+
+                searchProducts();
+
+            }
+        }
+    );
+
+
+$("cartButton")
+    .addEventListener(
+        "click",
+        showCart
+    );
+
+
+$("homeLink")
+    .addEventListener(
+        "click",
+        function(event){
+
+            event.preventDefault();
+
+            showHome();
+
+        }
+    );
+
+
+$("shopNowButton")
+    .addEventListener(
+        "click",
+        function(){
+
+            $("products")
+                .scrollIntoView({
+                    behavior:"smooth"
+                });
+
+        }
+    );
+
+
+$("detailsBackButton")
+    .addEventListener(
+        "click",
+        showHome
+    );
+
+
+$("continueShoppingButton")
+    .addEventListener(
+        "click",
+        showHome
+    );
+
+
+$("checkoutButton")
+    .addEventListener(
+        "click",
+        showCheckout
+    );
+
+
+$("backToCartButton")
+    .addEventListener(
+        "click",
+        showCart
+    );
+
+
+$("placeOrderButton")
+    .addEventListener(
+        "click",
+        placeOrder
+    );
+
+
+$("successContinueButton")
+    .addEventListener(
+        "click",
+        showHome
+    );
+
+
+$("logoutButton")
+    .addEventListener(
+        "click",
+        logoutUser
+    );
+
+
+$("deliveryArea")
+    .addEventListener(
+        "change",
+        calculateDelivery
+    );
+
+
+/* ================= START ================= */
 
 loadProducts();
 
@@ -2937,21 +2731,48 @@ checkLogin();
 
 updateCart();
 
+showHome();
+
+
+/* ================= SERVICE WORKER ================= */
+
+if(
+    "serviceWorker" in navigator
+){
+
+    window.addEventListener(
+        "load",
+        function(){
+
+            navigator.serviceWorker
+                .register("service-worker.js")
+                .then(function(){
+
+                    console.log(
+                        "NEXVORA Service Worker Ready"
+                    );
+
+                })
+                .catch(function(error){
+
+                    /*
+                     Service Worker না থাকলেও
+                     মূল website বন্ধ হবে না।
+                    */
+
+                    console.log(
+                        "Service Worker unavailable:",
+                        error
+                    );
+
+                });
+
+        }
+    );
+}
+
+})();
 </script>
 
 </body>
-
-<script>
-    if ("serviceWorker" in navigator) {
-        window.addEventListener("load", function() {
-            navigator.serviceWorker.register("service-worker.js")
-                .then(function() {
-                    console.log("NEXVORA App Ready");
-                })
-                .catch(function(error) {
-                    console.log("Service Worker Error:", error);
-                });
-        });
-    }
-</script>
 </html>
