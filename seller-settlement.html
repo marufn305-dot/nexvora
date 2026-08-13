@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>NEXVORA - Seller Settlement</title>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7f6;
+      color: #222;
+    }
+    
+    .header {
+      background: #008f4c;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .header h1 {
+      font-size: 25px;
+    }
+    
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 15px;
+    }
+    
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 14px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+    }
+    
+    .card h2 {
+      margin-bottom: 15px;
+    }
+    
+    .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .row:last-child {
+      border-bottom: 0;
+    }
+    
+    .label {
+      color: #666;
+    }
+    
+    .value {
+      font-weight: bold;
+    }
+    
+    .commission {
+      color: #d93636;
+    }
+    
+    .seller {
+      color: #008f4c;
+    }
+    
+    .total {
+      background: #f0f8f4;
+      padding: 18px;
+      border-radius: 10px;
+      margin-top: 15px;
+      text-align: center;
+    }
+    
+    .total p {
+      color: #666;
+    }
+    
+    .total h2 {
+      color: #008f4c;
+      margin-top: 5px;
+    }
+    
+    .status {
+      padding: 12px;
+      border-radius: 8px;
+      background: #e8f7ef;
+      color: #008f4c;
+      text-align: center;
+      font-weight: bold;
+    }
+    
+    .note {
+      margin-top: 15px;
+      padding: 12px;
+      background: #fff8e6;
+      border-radius: 8px;
+      color: #795900;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+  
+  <div class="header">
+    
+    <h1>NEXVORA</h1>
+    
+    <p>Seller Settlement</p>
+    
+  </div>
+  
+  
+  <div class="container">
+    
+    
+    <!-- Order -->
+    
+    <div class="card">
+      
+      <h2>Order Settlement</h2>
+      
+      
+      <div class="row">
+        
+        <span class="label">
+          Order ID
+        </span>
+        
+        <span class="value">
+          #NXV10001
+        </span>
+        
+      </div>
+      
+      
+      <div class="row">
+        
+        <span class="label">
+          Product
+        </span>
+        
+        <span class="value">
+          Example Product
+        </span>
+        
+      </div>
+      
+      
+      <div class="row">
+        
+        <span class="label">
+          Order Amount
+        </span>
+        
+        <span class="value">
+          ৳1,000
+        </span>
+        
+      </div>
+      
+      
+      <div class="row">
+        
+        <span class="label">
+          NEXVORA Commission (5%)
+        </span>
+        
+        <span class="value commission">
+          - ৳50
+        </span>
+        
+      </div>
+      
+      
+      <div class="row">
+        
+        <span class="label">
+          Seller Earnings
+        </span>
+        
+        <span class="value seller">
+          ৳950
+        </span>
+        
+      </div>
+      
+      
+      <div class="total">
+        
+        <p>
+          Seller Available Balance
+        </p>
+        
+        <h2>
+          ৳950
+        </h2>
+        
+      </div>
+      
+    </div>
+    
+    
+    <!-- Settlement Status -->
+    
+    <div class="card">
+      
+      <h2>
+        Settlement Status
+      </h2>
+      
+      
+      <div class="status">
+        
+        ✅ Settlement Ready
+        
+      </div>
+      
+      
+      <div class="note">
+        
+        Customer delivery confirmation সম্পন্ন হওয়ার
+        পর Seller-এর পাওনা Available Balance-এ
+        যোগ হবে।
+        
+      </div>
+      
+    </div>
+    
+  </div>
+  
+</body>
+
+</html>
