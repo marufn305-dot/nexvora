@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NEXVORA - Seller Wallet</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f5f7f6;
+    color:#222;
+}
+
+.header{
+    background:#008f4c;
+    color:white;
+    padding:18px;
+    text-align:center;
+}
+
+.header h1{
+    font-size:24px;
+}
+
+.container{
+    max-width:600px;
+    margin:20px auto;
+    padding:15px;
+}
+
+.balance-card{
+    background:#008f4c;
+    color:white;
+    padding:25px;
+    border-radius:15px;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.balance-card p{
+    font-size:15px;
+    margin-bottom:8px;
+}
+
+.balance-card h2{
+    font-size:34px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.card{
+    background:white;
+    padding:20px 12px;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.card p{
+    color:#666;
+    font-size:14px;
+}
+
+.card h3{
+    margin-top:8px;
+    font-size:21px;
+}
+
+.withdraw{
+    background:white;
+    margin-top:20px;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.withdraw h2{
+    margin-bottom:15px;
+}
+
+.withdraw input,
+.withdraw select{
+    width:100%;
+    padding:13px;
+    margin-bottom:12px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    font-size:15px;
+    background:white;
+}
+
+.withdraw button{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:8px;
+    background:#008f4c;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.status{
+    margin-top:20px;
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.status h2{
+    margin-bottom:10px;
+}
+
+.status-item{
+    padding:12px 0;
+    border-bottom:1px solid #eee;
+}
+
+.status-item:last-child{
+    border-bottom:0;
+}
+
+.pending{
+    color:#e69500;
+}
+
+.note{
+    margin-top:15px;
+    padding:12px;
+    background:#f0f8f4;
+    border-radius:8px;
+    font-size:13px;
+    color:#555;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>NEXVORA</h1>
+    <p>Seller Wallet</p>
+</div>
+
+<div class="container">
+
+    <!-- Available Balance -->
+
+    <div class="balance-card">
+        <p>Available Balance</p>
+        <h2>৳0.00</h2>
+    </div>
+
+
+    <!-- Wallet Information -->
+
+    <div class="cards">
+
+        <div class="card">
+            <p>Total Sales</p>
+            <h3>৳0.00</h3>
+        </div>
+
+        <div class="card">
+            <p>Pending Balance</p>
+            <h3>৳0.00</h3>
+        </div>
+
+        <div class="card">
+            <p>NEXVORA Commission</p>
+            <h3>৳0.00</h3>
+        </div>
+
+        <div class="card">
+            <p>Total Withdrawn</p>
+            <h3>৳0.00</h3>
+        </div>
+
+    </div>
+
+
+    <!-- Withdrawal -->
+
+    <div class="withdraw">
+
+        <h2>Withdraw Money</h2>
+
+        <select id="method">
+
+            <option value="">
+                Payment Method নির্বাচন করুন
+            </option>
+
+            <option value="bkash">
+                bKash
+            </option>
+
+            <option value="nagad">
+                Nagad
+            </option>
+
+            <option value="rocket">
+                Rocket
+            </option>
+
+            <option value="upay">
+                Upay
+            </option>
+
+            <option value="bank">
+                Bank
+            </option>
+
+        </select>
+
+
+        <input
+            type="text"
+            id="account"
+            placeholder="bKash / Nagad / Rocket / Upay / Bank Account Number"
+        >
+
+
+        <input
+            type="number"
+            id="amount"
+            placeholder="কত টাকা Withdraw করবেন?"
+            min="1"
+        >
+
+
+        <button onclick="withdrawMoney()">
+            Withdraw Request পাঠান
+        </button>
+
+
+        <div class="note">
+            আপনার Withdrawal Request প্রথমে NEXVORA Admin-এর কাছে যাবে।
+            Admin যাচাই করার পর Payment সম্পন্ন করবে।
+        </div>
+
+    </div>
+
+
+    <!-- Withdrawal Status -->
+
+    <div class="status">
+
+        <h2>Withdrawal Status</h2>
+
+        <div class="status-item">
+
+            <strong>কোনো Withdrawal Request নেই</strong>
+
+            <p class="pending">
+                Pending
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function withdrawMoney(){
+
+    const method =
+        document.getElementById("method").value;
+
+    const account =
+        document.getElementById("account").value.trim();
+
+    const amount =
+        document.getElementById("amount").value;
+
+
+    if(method === ""){
+
+        alert("Payment Method নির্বাচন করুন।");
+
+        return;
+    }
+
+
+    if(account === ""){
+
+        alert("আপনার Account Number দিন।");
+
+        return;
+    }
+
+
+    if(amount === "" || Number(amount) <= 0){
+
+        alert("সঠিক Withdrawal Amount দিন।");
+
+        return;
+    }
+
+
+    let methodName = "";
+
+    if(method === "bkash"){
+        methodName = "bKash";
+    }
+
+    else if(method === "nagad"){
+        methodName = "Nagad";
+    }
+
+    else if(method === "rocket"){
+        methodName = "Rocket";
+    }
+
+    else if(method === "upay"){
+        methodName = "Upay";
+    }
+
+    else if(method === "bank"){
+        methodName = "Bank";
+    }
+
+
+    alert(
+        "Withdrawal Request সফলভাবে তৈরি হয়েছে!\n\n" +
+        "Amount: ৳" + amount +
+        "\nPayment Method: " + methodName +
+        "\nAccount: " + account +
+        "\n\nAdmin যাচাই করার পর Payment করা হবে।"
+    );
+
+}
+
+</script>
+
+</body>
+</html>
